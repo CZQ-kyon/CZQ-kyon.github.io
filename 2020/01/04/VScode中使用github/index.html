@@ -22,7 +22,7 @@
     <meta name="description" content="">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>Hello World111 · CZQ-kyon&#39;s Studio</title>
+    <title>VScode中使用Github管理项目 · CZQ-kyon&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -217,7 +217,7 @@
                 <a href="/" >CZQ-kyon&#39;s Studio.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Hello World111</a>
+                <a href="#" class="post-name">VScode中使用Github管理项目</a>
             </div>
     </div>
     
@@ -247,7 +247,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Hello World111
+            VScode中使用Github管理项目
             <!-- 404 -->
             
         </h1>
@@ -266,12 +266,12 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">73</span>Reading time: <span class="post-count reading-time">1 min</span></span>
+                        <span>Word count: <span class="post-count word-count">900</span>Reading time: <span class="post-count reading-time">3 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2020/01/03</span>
+                    <span class="post-intro-time">2020/01/04</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -395,19 +395,154 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+        <h2 id="一、Git安装和使用"><a href="#一、Git安装和使用" class="headerlink" title="一、Git安装和使用"></a>一、Git安装和使用</h2><p><strong>1、下载Git</strong>  </p>
+<blockquote>
+<p>官方地址：<a href="https://git-scm.com/download/win" target="_blank" rel="noopener">https://git-scm.com/download/win</a></p>
+</blockquote>
+<p>选择自己电脑的位数下载：</p>
+<p><img src="../../images/git%E4%B8%8B%E8%BD%BD.PNG" alt="git down"></p>
+<p>这里提供 Git-2.21.1.2-64-bit.exe 的下载链接：</p>
+<blockquote>
+<p><a href="https://pan.baidu.com/s/1DfYJe4Rbr2KyuGqHdJNTyw&emsp;提取码：1t2d" target="_blank" rel="noopener">https://pan.baidu.com/s/1DfYJe4Rbr2KyuGqHdJNTyw&emsp;提取码：1t2d</a>  </p>
+</blockquote>
+<br/>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p><strong>2、双击安装</strong></p>
+<p><img src="../../images/%E5%AE%89%E8%A3%851.png" alt="安装"></p>
+<br/>  
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p><strong>3、选择安装目录</strong>  </p>
+<p><img src="../../images/%E5%AE%89%E8%A3%852.png" alt="安装目录">  </p>
+<br/>
 
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p><strong>4、选择组件</strong>  </p>
+<p><img src="../../images/%E5%AE%89%E8%A3%853.png" alt="选择组件">  </p>
+<p>Windows Explorer integration Windows资源管理器集成鼠标右键菜单（在文件中右键可以直接在此处使用Git命令界面）:</p>
+<ul>
+<li><p>Git Bash Here  </p>
+</li>
+<li><p>Git GUI Here  </p>
+</li>
+</ul>
+<p>Check daily for Git for Windows updates<br>每天检查Git是否有Windows更新（不要勾选）</p>
+<br/>
 
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<p><strong>5、开始菜单名称设置</strong>  </p>
+<p><img src="../../images/%E5%AE%89%E8%A3%854.png" alt="开始菜单"></p>
+<br/>
+
+<p><strong>6、选择Git使用的默认编辑器</strong></p>
+<p><img src="../../images/%E5%AE%89%E8%A3%855.png.png" alt="默认编辑器"><br>这里选择默认的Vim即可  </p>
+<br/>
+
+<p><strong>7、设置Path环境</strong>  </p>
+<p><img src="../../images/%E5%AE%89%E8%A3%856.png" alt="path环境"></p>
+<p>第一项：不会自动修改环境变量中的Path，只能使用 Git Bash 的 Git 工具</p>
+<p>第二项：会帮我们自动修改Path，可以在 Git Bash 和 Windows 命令行中使用 Git</p>
+<p>第三项：Git 和可选的 Unix工具都将添加到Path中，会覆盖 Windows 工具，如“ find 和 sort “</p>
+<p>这里我们选默认的第二项</p>
+<br/>
+
+<p><strong>8、选择HTTPS传输后端</strong>  </p>
+<p><img src="../../images/%E5%AE%89%E8%A3%857.png" alt="传输后端"><br>这里选择默认第一项  </p>
+<br/>
+
+<p><strong>9、配置行结束转换</strong>  </p>
+<p><img src="../../images/%E5%AE%89%E8%A3%858.png" alt="行结束转换"><br>选默认第一项</p>
+<br/>
+
+<p><strong>10、配置终端模拟器以与 Git Bash 一起使用</strong>  </p>
+<p><img src="../../images/%E5%AE%89%E8%A3%859.png" alt="终端模拟器"><br>选默认第一项</p>
+<br/>
+
+<p><strong>11、配置额外的选项</strong>  </p>
+<p><img src="../../images/%E5%AE%89%E8%A3%8510.png" alt="额外选项"><br>选默认第一项</p>
+<br/>
+
+<p><strong>12、安装Install</strong></p>
+<p><img src="../../images/%E5%AE%89%E8%A3%8511.png" alt="最终安装">  </p>
+<br/>
+
+<p><strong>13、环境变量</strong><br>检查环境变量中是否存在 GIT_HOME ，若不存在，就新建一个。设置位置为刚刚第三步中填入的目录，这里我选择的是E盘下的GIT</p>
+<p><img src="../../images/githome.png" alt="GIT_HOME"></p>
+<p>然后在 Path 中填入：</p>
+<blockquote>
+<p>%GIT_HOME%\bin  </p>
+</blockquote>
+<p><img src="../../images.pathgit.png" alt="path_git">  </p>
+<hr>
+<p>恭喜！ 到这里 Git 的安装就完成了！</p>
+<hr>
+<h2 id="二、VScode-中使用-git-管理项目"><a href="#二、VScode-中使用-git-管理项目" class="headerlink" title="二、VScode 中使用 git 管理项目"></a>二、VScode 中使用 git 管理项目</h2><p><strong>1、进入项目文件夹中</strong>  </p>
+<p>在vscode中，按</p>
+<blockquote>
+<p>ctrl + ~  </p>
+</blockquote>
+<p>进入终端</p>
+<ul>
+<li>初始化 .git 仓库：<br><code>git init</code><br>初始化完成后在文件夹中会出现一个 .git 的灰色文件夹，这是本地用来暂时存放代码的仓库  </li>
+</ul>
+<br/>
+
+<ul>
+<li>查看本地仓储的状态<br><code>git status -s</code><br>此时终端中会显示还未提交的文件  </li>
+</ul>
+<br/>
+
+<ul>
+<li>将被跟踪的文件添加到跟踪列表<br><code>git add .</code>  </li>
+</ul>
+<br/>
+
+<ul>
+<li>添加本地GIT忽略清单文件 .gitignore（此文件用于说明忽略的文件有哪些）<br>一般我们不将 node_modules文件夹 添加进去（只要package.json存在，就能重新下载node_modules）  </li>
+</ul>
+<p>新建 .gitignore 文件</p>
+<blockquote>
+<p>//.gitignore<br>node_modules</p>
+</blockquote>
+<p>如果不想将.js后缀的文件托管上去，在 .gitignore 文件里增加：</p>
+<blockquote>
+<p>//.gitignore<br>node_modules<br>*.js</p>
+</blockquote>
+<br/>
+
+<ul>
+<li>提交被托管文件变化到本地仓储.git中<br><code>git commit -m &#39;xxx&#39;</code><br>单引号里的xxx可以添加的是  你对这个提交的说明，如：’今天的第一提交’  </li>
+</ul>
+<br/>
+
+<ul>
+<li>对比差异命令<br>与  .git 中最后一个添加的版本进行对比<br><code>git diff</code></li>
+</ul>
+<br/>
+
+<ul>
+<li>查看日志<br><code>git log</code><br>终端中会显示你历次提交的记录<br><img src="../../images/gitlog.png" alt="gitlog"></li>
+</ul>
+<br/>
+
+<ul>
+<li>版本回归<br>如果在编辑过程中，代码打错了，想回到上一个版本中，可以先 「查看日志」，然后通过 显示出来的 commit 前6位哈希值，进行回归<br><code>git reset --hard  6位哈希值</code><br><img src="../../images/gitresset.png" alt="gitreset"></li>
+</ul>
+<h2 id="三、Github"><a href="#三、Github" class="headerlink" title="三、Github"></a>三、Github</h2><p>1、登录 Github  </p>
+<br/>
+
+<p>2、新建仓库 new repository<br><img src="../../images/newrepository.png" alt="新建仓库"></p>
+<p><img src="../../images/pushgit.png" alt="新建仓库">  </p>
+<br/>
+
+<p>3、本地项目与 Github 建立远端连接<br><code>git remote add origin https://xxxxxxxxxxxxxxxx</code></p>
+<p>这里的 <code>https://xxxxxxxxxxxxxxxx</code> 填新建仓库时给的那个连接</p>
+<br/>
+
+<p>4、本地代码推送到远端 主分支master<br><code>git push -u origin master</code></p>
+<br/>
+
+<p>5、分支<br>查看分支：<br><code>git branch</code></p>
+<p>新建分支：<br><code>git branch 分支名</code></p>
+<p>切换分支：<br><code>git checkout 分支名</code> </p>
+<p>6、克隆代码到当前文件夹（先清除当前文件夹中的文件）<br><code>git clone https://xxxxxxxxx</code><br>clone 后面是需要克隆的项目地址</p>
 
     </article>
     <!-- license  -->
@@ -416,13 +551,13 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2020/01/04/VScode%E4%B8%AD%E4%BD%BF%E7%94%A8github/" title= "VScode中使用Github管理项目">
-                    <div class="nextTitle">VScode中使用Github管理项目</div>
-                </a>
-            
         </li>
         <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/01/03/hello-world/" title= "Hello World111">
+                    <div class="prevTitle">Hello World111</div>
+                </a>
             
         </li>
     </ul>
@@ -540,7 +675,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、Git安装和使用"><span class="toc-number">1.</span> <span class="toc-text">一、Git安装和使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、VScode-中使用-git-管理项目"><span class="toc-number">2.</span> <span class="toc-text">二、VScode 中使用 git 管理项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、Github"><span class="toc-number">3.</span> <span class="toc-text">三、Github</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
