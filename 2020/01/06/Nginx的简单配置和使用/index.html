@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="John Doe">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="John Doe">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>Nginx的简单配置和使用 · CZQ-kyon&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >CZQ-kyon&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Nginx的简单配置和使用</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>CZQ-kyon's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Nginx的简单配置和使用
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "nginx">nginx</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">2.8k</span>阅读时长: <span class="post-count reading-time">11 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/01/06</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>&emsp;&emsp;由于毕业设计的需求，前阵子简单学习了怎么简单使用 Nginx 在阿里云ECS上配置一个HTTP服务器，使用的系统是Windows。为了在忘记操作时可以复习，现在记一些在学习过程中的笔记。</p>
+<h1 id="一、Nginx-常用命令"><a href="#一、Nginx-常用命令" class="headerlink" title="一、Nginx 常用命令"></a>一、Nginx 常用命令</h1><h2 id="1、启动命令"><a href="#1、启动命令" class="headerlink" title="1、启动命令"></a>1、启动命令</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">start</span> <span class="string">nginx</span></span><br><span class="line"><span class="string">```</span>  </span><br><span class="line"></span><br><span class="line"><span class="comment">## 2、不等待进程结束，直接停止命令</span></span><br><span class="line"></span><br><span class="line"><span class="string">```yaml</span></span><br><span class="line"><span class="string">nginx</span> <span class="string">-s</span> <span class="string">stop</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3、等待进程结束后，停止命令（推荐）"><a href="#3、等待进程结束后，停止命令（推荐）" class="headerlink" title="3、等待进程结束后，停止命令（推荐）"></a>3、等待进程结束后，停止命令（推荐）</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">nginx</span> <span class="string">-s</span> <span class="string">quit</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4、重启命令"><a href="#4、重启命令" class="headerlink" title="4、重启命令"></a>4、重启命令</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">nginx</span> <span class="string">-s</span> <span class="string">reload</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="5、查看版本"><a href="#5、查看版本" class="headerlink" title="5、查看版本"></a>5、查看版本</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">nginx</span> <span class="string">-v</span></span><br></pre></td></tr></table></figure>
+<p>如果 查看版本显示得出来，则说明 Nginx 安装成功</p>
+<br>
+
+<p>以上的操作在 cmd 中要进入到 nginx 的文件夹中</p>
+<br>
+
+<h1 id="二、Windows-下的nginx文件夹目录结构"><a href="#二、Windows-下的nginx文件夹目录结构" class="headerlink" title="二、Windows 下的nginx文件夹目录结构"></a>二、Windows 下的nginx文件夹目录结构</h1><blockquote>
+<p> |– nginx-1.14.2<br>    |&emsp; |– conf<br>    |&emsp; |&emsp; &emsp;|– fastcgi.conf<br>    |&emsp; |&emsp; &emsp;|– fastcgi_params<br>    |&emsp; |&emsp; &emsp;|– koi-utf<br>    |&emsp; |&emsp; &emsp;|– koi-win<br>    |&emsp; |&emsp; &emsp;|– mime.types<br>    |&emsp; |&emsp; &emsp;|– nginx.conf<br>    |&emsp; |&emsp; &emsp;|– scgi_params<br>    |&emsp; |&emsp; &emsp;|– uwsgi_params<br>    |&emsp; |&emsp; &emsp;|– win-utf<br>    |&emsp; |– contrib<br>    |&emsp; |&emsp; &emsp;|– unicode2nginx<br>    |&emsp; |&emsp; &emsp;|&emsp;&emsp; |– koi-utf<br>    |&emsp; |&emsp; &emsp;|&emsp;&emsp; |– unicode-to-nginx.pl<br>    |&emsp; |&emsp; &emsp;|&emsp;&emsp; |– win-utf<br>    |&emsp; |&emsp; &emsp;|– vim<br>    |&emsp; |&emsp; &emsp;|&emsp;&emsp; |– ftdetect<br>    |&emsp; |&emsp; &emsp;|&emsp;&emsp; |&emsp;&emsp; |–  nginx.vim<br>    |&emsp; |&emsp; &emsp;|&emsp;&emsp; |– ftplugin<br>    |&emsp; |&emsp; &emsp;|&emsp;&emsp; |&emsp;&emsp; |–  nginx.vim<br>    |&emsp; |&emsp; &emsp;|&emsp;&emsp; |– indent<br>    |&emsp; |&emsp; &emsp;|&emsp;&emsp; |&emsp;&emsp; |–  nginx.vim<br>    |&emsp; |&emsp; &emsp;|&emsp;&emsp; |– syntax<br>    |&emsp; |&emsp; &emsp;|&emsp;&emsp; |&emsp;&emsp; |–  nginx.vim<br>    |&emsp; |&emsp; &emsp;|– geo2nginx.pl<br>    |&emsp; |&emsp; &emsp;|– README<br>    |&emsp; |– docs<br>    |&emsp; |&emsp; &emsp;|– CHANGES<br>    |&emsp; |&emsp; &emsp;|– CHANGES.ru<br>    |&emsp; |&emsp; &emsp;|– LICENSE<br>    |&emsp; |&emsp; &emsp;|– OpenSSL.LICENSE<br>    |&emsp; |&emsp; &emsp;|– PCRE.LICENSE<br>    |&emsp; |&emsp; &emsp;|– README<br>    |&emsp; |&emsp; &emsp;|– zlib.LICENSE<br>    |&emsp; |– html<br>    |&emsp; |&emsp; &emsp;|– 50x.html<br>    |&emsp; |&emsp; &emsp;|– index.html<br>    |&emsp; |– logs<br>    |&emsp; |&emsp; &emsp;|– access.log<br>    |&emsp; |&emsp; &emsp;|– error.log<br>    |&emsp; |&emsp; &emsp;|– nginx.pid<br>    |&emsp; |– temp<br>    |&emsp; |&emsp; &emsp;|– client_body_temp<br>    |&emsp; |&emsp; &emsp;|– fastcgi_temp<br>    |&emsp; |&emsp; &emsp;|– proxy_temp<br>    |&emsp; |&emsp; &emsp;|– scgi_temp<br>    |&emsp; |&emsp; &emsp;|– uwsgi_temp<br>    |&emsp; |– nginx.exe</p>
+</blockquote>
+<p>其中 html 文件夹是服务目录，如 vue-cli 打包后的 dist 或者 hexo 打包后的 public ，都是存放在这个文件夹中。</p>
+<p>conf 文件夹就是配置 nginx 的文件夹，Windows 下的 Nginx 这个文件夹和 Linux 有不同，曾经以 Linux 的目录结构为基础，例如 Linux 下这个文件夹中存在 default.conf 这个文件，但是 Windows 中并没有，在这里给卡住了。</p>
+<hr>
+<p><strong>PS:由于 Windows 下的 Nginx 没有子配置文件，只有一个总配置文件 nginx.conf ，所以我们可以自己新建一个 conf.d 文件夹，里面存放我们自己新建的 .conf 的子配置文件</strong></p>
+<p>然后记得在主配置文件 nginx.conf 中加入：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">include</span> <span class="string">conf.d/*.conf</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>下面来看一个总配置文件 nginx.conf(下面展示的是经常要更改的代码)：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http</span> <span class="string">&#123;</span></span><br><span class="line">    <span class="string">include</span>       <span class="string">mime.types;</span></span><br><span class="line">    <span class="string">default_type</span>  <span class="string">application/octet-stream;</span></span><br><span class="line">    <span class="string">sendfile</span>        <span class="string">on;</span></span><br><span class="line">    <span class="string">keepalive_timeout</span>  <span class="number">65</span><span class="string">;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">gzip</span>  <span class="string">on;</span></span><br><span class="line">    <span class="string">gzip_types</span> <span class="string">text/plain</span> <span class="string">application/javascript</span> <span class="string">text/css;</span></span><br><span class="line">    <span class="string">include</span> <span class="string">conf.d/*.conf;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">server</span> <span class="string">&#123;</span></span><br><span class="line">        <span class="string">listen</span>       <span class="number">80</span><span class="string">;</span> <span class="comment">#配置监听端口</span></span><br><span class="line">        <span class="string">server_name</span>  <span class="string">localhost;</span> <span class="comment">#配置域名</span></span><br><span class="line"></span><br><span class="line">        <span class="string">location</span> <span class="string">/</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="string">root</span>   <span class="string">html/dist;</span> <span class="comment">#服务默认启动目录</span></span><br><span class="line">            <span class="string">index</span>  <span class="string">index.html;</span> <span class="comment">#默认访问文件</span></span><br><span class="line">        <span class="string">&#125;</span></span><br><span class="line"></span><br><span class="line">        <span class="string">error_page</span>   <span class="number">500</span> <span class="number">502</span> <span class="number">503</span> <span class="number">504</span>  <span class="string">/50x.html;</span> <span class="comment">#错误状态码的显示页面，配置后需要重启</span></span><br><span class="line">        <span class="string">location</span> <span class="string">=</span> <span class="string">/50x.html</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="string">root</span>   <span class="string">html;</span></span><br><span class="line">        <span class="string">&#125;</span></span><br><span class="line">    <span class="string">&#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>在 阿里云ECS ，server 中的 listen 写完还要去 ECS实例那里打开端口：<br>&emsp;1· 进入阿里云控制台</p>
+<p>&emsp;2· 左边网络与安全中，选择 “安全组”</p>
+<p>&emsp;3· 点击安全组后的 “配置规则”</p>
+<p>&emsp;4· 右上角的 “添加安全组规则”，“端口范围”进行添加需要的端口号（如：80），授权对象填：0.0.0.0/0</p>
+<p>当执行 <code>start nginx</code> 可以显示出下图，即说明都配置成功了</p>
+<p><img src="/2020/01/06/Nginx%E7%9A%84%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BD%BF%E7%94%A8/%E6%98%BE%E7%A4%BAnginx.png" alt="显示"></p>
+<br>
+
+<br>
+
+<h1 id="三、简单的访问控制"><a href="#三、简单的访问控制" class="headerlink" title="三、简单的访问控制"></a>三、简单的访问控制</h1><p>&emsp;服务器可以设置 允许特定主机访问 或 不允许某些主机访问，可通过控制一些IP访问，这可在location里进行设置<br>在nginx.conf里配置：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">location</span> <span class="string">/</span> <span class="string">&#123;</span></span><br><span class="line">    <span class="string">allow</span> <span class="string">xxx.xxx.xxx.xxx;</span> </span><br><span class="line">    <span class="string">deny</span>  <span class="string">all;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>上面的代码表示：只允许ip为 xxx.xxx.xxx.xxx 进行访问，其他的ip都访问不了</p>
+<blockquote>
+<p>deny ：禁止访问<br>allow ：允许访问</p>
+</blockquote>
+<p><strong>注意：两个参数的位置会对结果产生影响，若deny all 在上面，则下面的 allow 就不会生效，从上到下，先匹配的优先级高。</strong><br><strong>在同一个块下的两个权限指令，先出现的设置会覆盖后出现的设置（也就是谁先触发，谁起作用）</strong></p>
+<p>例：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">location</span> <span class="string">/</span> <span class="string">&#123;</span> </span><br><span class="line">    <span class="string">deny</span>  <span class="string">all;</span></span><br><span class="line">    <span class="string">allow</span> <span class="string">xxx.xxx.xxx.xxx;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>上述的代码表示：所有的ip都没法访问，下面的 allow 不生效</p>
+<br>
+
+<h1 id="四、错误发生指定方式"><a href="#四、错误发生指定方式" class="headerlink" title="四、错误发生指定方式"></a>四、错误发生指定方式</h1><h2 id="1、多错误指向一个页面"><a href="#1、多错误指向一个页面" class="headerlink" title="1、多错误指向一个页面"></a>1、多错误指向一个页面</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">error_page</span>   <span class="number">500</span> <span class="number">502</span> <span class="number">503</span> <span class="number">504</span>  <span class="string">/50x.html;</span></span><br><span class="line"><span class="string">location</span> <span class="string">=</span> <span class="string">/50x.html</span> <span class="string">&#123;</span></span><br><span class="line">    <span class="string">root</span>   <span class="string">html;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>表示当发生上述指定的任意一个错误的时候，都是用html目录下的/50.html文件进行处理</p>
+<h2 id="2、单独为错误指定处理方式"><a href="#2、单独为错误指定处理方式" class="headerlink" title="2、单独为错误指定处理方式"></a>2、单独为错误指定处理方式</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">error_page</span> <span class="number">404</span> <span class="string">/404error.html;</span></span><br><span class="line"><span class="string">location</span> <span class="string">=</span> <span class="string">/404error.html</span> <span class="string">&#123;</span></span><br><span class="line">    <span class="string">root</span>   <span class="string">html;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>然后在网站html目录下先新建一个 404error.html 文件，并写入错误网页提示</p>
+<p>也可以把错误码换成一个地址：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">error_page</span> <span class="number">404</span> <span class="string">http://www.baidu.com</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h1 id="五、设置虚拟主机"><a href="#五、设置虚拟主机" class="headerlink" title="五、设置虚拟主机"></a>五、设置虚拟主机</h1><h2 id="概念："><a href="#概念：" class="headerlink" title="概念："></a>概念：</h2><p>&emsp;在一台物理主机服务器上划分出多个磁盘空间，每个磁盘空间都是一个虚拟主机，每台虚拟主机都可以对外提供Web服务。虚拟主机是一台独立的服务器主机，用户能够利用虚拟主机把多个不同域名的网站部署在同一台服务器是上。</p>
+<h2 id="1、基于端口号配置虚拟主机"><a href="#1、基于端口号配置虚拟主机" class="headerlink" title="1、基于端口号配置虚拟主机"></a>1、基于端口号配置虚拟主机</h2><p>在 conf.d 文件夹下新建一个 子配置文件 default.conf</p>
+<p>例：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">server&#123;</span></span><br><span class="line">    <span class="string">listen</span> <span class="number">8001</span><span class="string">;</span></span><br><span class="line">    <span class="string">server_name</span> <span class="string">localhost;</span></span><br><span class="line">    <span class="string">root</span> <span class="string">html;</span></span><br><span class="line">    <span class="string">index</span> <span class="string">czq.html;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>然后在 html 文件夹下的 czq.html 文件中编辑要显示的内容，如:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Welcome port 8001<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>开启&emsp;<code>start nginx</code>&emsp;后，当我们通过&emsp;<code>localhost:8001</code>&emsp;访问的时候，会显示&emsp;<code>Welcome port 8001</code></p>
+<br>
+
+<h2 id="2、基于IP配置虚拟主机"><a href="#2、基于IP配置虚拟主机" class="headerlink" title="2、基于IP配置虚拟主机"></a>2、基于IP配置虚拟主机</h2><p>和基于端口的配置一样，只是把 server_name 选项，配置成IP就可以</p>
+<p>例：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">erver&#123;</span></span><br><span class="line">    <span class="string">listen</span> <span class="number">80</span><span class="string">;</span></span><br><span class="line">    <span class="string">server_name</span> <span class="number">192.168</span><span class="number">.2</span><span class="number">.151</span><span class="string">;</span></span><br><span class="line">    <span class="string">root</span> <span class="string">html;</span></span><br><span class="line">    <span class="string">index</span> <span class="string">czq.html;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这种演示需要多个IP的支持，由于阿里ECS只提供了一个IP，所以这里没有办法演示。</p>
+<br>
+
+<h2 id="3、基于域名配置虚拟主机"><a href="#3、基于域名配置虚拟主机" class="headerlink" title="3、基于域名配置虚拟主机"></a>3、基于域名配置虚拟主机</h2><p>先对域名进行解析，这样域名才能正确定位到需要的IP上</p>
+<p>和基于端口的配置一样，只是把 server_name 选项，配置成域名就可以</p>
+<p>例：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">server&#123;</span></span><br><span class="line">    <span class="string">listen</span> <span class="number">8001</span><span class="string">;</span></span><br><span class="line">    <span class="string">server_name</span>  <span class="string">czqkyon.top;</span></span><br><span class="line">    <span class="string">root</span> <span class="string">html;</span></span><br><span class="line">    <span class="string">index</span> <span class="string">index.html;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>当访问 czqkyon.top 的使用，就会显示 html 文件夹下的 index.html</p>
+<br>
+
+<h1 id="六、正向代理和反向代理"><a href="#六、正向代理和反向代理" class="headerlink" title="六、正向代理和反向代理"></a>六、正向代理和反向代理</h1><h2 id="1、正向代理"><a href="#1、正向代理" class="headerlink" title="1、正向代理"></a>1、正向代理</h2><p>（翻墙工具）；把不让我们访问的服务器的网页请求，代理到一个可以访问该网站的代理服务器上，一般叫做 proxy 服务器，再转发给客户。<br>也就是 <font color="orange">客户</font> 想访问 <font color="orange">目标服务器</font> ，但是没有权限，但是 <font color="orange">代理服务器</font> 有权限访问 <font color="orange">目标服务器</font>，并且 <font color="orange">客户</font> 有访问 <font color="orange">代理服务器</font> 的权限，这时，可以通过访问 <font color="orange">代理服务器</font>，<font color="orange">代理服务器</font> 访问 <font color="orange">目标服务器</font> ，把内容给 <font color="orange">客户</font> 呈现出来。</p>
+<p><strong>在此过程中，要访问的服务器只有一个，而客户却有多个，所以此处的代理，代理的是客户端。</strong></p>
+<h2 id="2、反向代理"><a href="#2、反向代理" class="headerlink" title="2、反向代理"></a>2、反向代理</h2><p><font color="orange">客户端</font> 发送请求，想要访问 <font color="orange">目标服务器</font> 上的内容，发送的请求被发送到 <font color="orange">代理服务器</font> 上，这个 <font color="orange">代理服务器</font> 再把请求发送到自己里面保存的 <font color="orange">目标服务器</font> 上，而 <font color="orange">客户</font> 真正想获取的内容就在这些设置好的 <font color="orange">内部服务器</font>  上。</p>
+<p><strong>在此过程中，客户只有一个，而服务器却有很多，所以此处的代理，代理的是服务器。</strong></p>
+<p>例：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">server&#123;</span></span><br><span class="line">    <span class="string">listen</span> <span class="number">80</span><span class="string">;</span></span><br><span class="line">    <span class="string">server_name</span> <span class="string">xxx.com;</span></span><br><span class="line">    <span class="string">location</span> <span class="string">/</span> <span class="string">&#123;</span></span><br><span class="line">        <span class="string">proxy_pass</span> <span class="number">116.62</span><span class="number">.171</span><span class="number">.43</span><span class="string">;</span></span><br><span class="line">    <span class="string">&#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>上述的代码：当你访问了 xxx.com 的时候，会被反向代理到116.62.171.43这个ip地址上</p>
+<h3 id="a、反向代理的好处："><a href="#a、反向代理的好处：" class="headerlink" title="a、反向代理的好处："></a>a、反向代理的好处：</h3><ul>
+<li><strong>安全性</strong>：正向代理的 客户端 能够在隐藏自身信息的同时访问任意网站，相反使用反向代理客户端只能通过 代理服务器 来访问 目标服务器 ，用户并不知道自己访问的 真实服务器 是哪一台，可以很好的提供服务器的安全保护</li>
+</ul>
+<br>
+
+<ul>
+<li><strong>功能性</strong>：反向代理的主要用途是为多个服务器提供负载均衡、缓存等功能。负载均衡就是一个网站的内容被部署在若干服务器上，可以把这些机子看成一个集群，Nginx可以将接受到的客户端请求 “均匀地” 分配到这个集群中所有的服务器上，从而实现服务器压力的平均分配，也叫负载均衡。</li>
+</ul>
+<br>
+
+<h3 id="b、其他反向代理指令："><a href="#b、其他反向代理指令：" class="headerlink" title="b、其他反向代理指令："></a>b、其他反向代理指令：</h3><blockquote>
+<ul>
+<li>proxy_set_header :在将客户端请求发送给后端服务器之前，更改来自客户端的请求头信息。<br></li>
+<li>proxy_connect_timeout:配置Nginx与后端代理服务器尝试建立连接的超时时间。<br></li>
+<li>proxy_read_timeout : 配置Nginx向后端服务器组发出read请求后，等待相应的超时时间。<br></li>
+<li>proxy_send_timeout：配置Nginx向后端服务器组发出write请求后，等待相应的超时时间。<br></li>
+<li>proxy_redirect :用于修改后端服务器返回的响应头中的Location和Refresh。</li>
+</ul>
+</blockquote>
+<br>
+
+<h1 id="七、Nginx适配PC和移动设备"><a href="#七、Nginx适配PC和移动设备" class="headerlink" title="七、Nginx适配PC和移动设备"></a>七、Nginx适配PC和移动设备</h1><p>Nginx 通过内置变量 <font color="orange">$http_user_agent</font> ，可以获取到请求客户端的 userAgent，可以知道用户目前处于移动端还是PC端，这样就可以根据用户的使用工具来展示不同的界面</p>
+<p>在 nginx-1.14.2 目录下的 html 文件夹下新建两个文件夹 pc 和 mobile，在 pc 和 mobile 目录下，各新建一个 index.html 文件：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//   pc / index.html</span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>I am pc!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//   mobile / index.html</span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>I am mobile!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后在之前写的 default.conf 文件中 ：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">server&#123;</span></span><br><span class="line">    <span class="string">listen</span>  <span class="number">8001</span><span class="string">;</span></span><br><span class="line">    <span class="string">server_name</span>  <span class="string">localhost;</span></span><br><span class="line">    <span class="string">location</span> <span class="string">/</span> <span class="string">&#123;</span></span><br><span class="line">        <span class="string">root</span> <span class="string">html/pc;</span></span><br><span class="line">        <span class="string">if($http_user_agent</span> <span class="string">~*</span> <span class="string">'(Android|webOS|iPhone|iPod|BlackBerry)'</span><span class="string">)&#123;</span></span><br><span class="line">            <span class="string">root</span> <span class="string">html/mobile;</span></span><br><span class="line">        <span class="string">&#125;</span></span><br><span class="line">        <span class="string">index</span> <span class="string">index.html;</span></span><br><span class="line">    <span class="string">&#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>浏览器访问 localhost:8001<br>默认显示 &emsp;<code>I am pc!</code><br>F12 切换到 移动设备 ，刷新，显示 &emsp;<code>I am mobile!</code></p>
+<h1 id="八、Nginx的Gzip压缩配置"><a href="#八、Nginx的Gzip压缩配置" class="headerlink" title="八、Nginx的Gzip压缩配置"></a>八、Nginx的Gzip压缩配置</h1><p>Gzip需要服务器和浏览器同时支持，在服务器被压缩后发送给浏览器，浏览器解压缩后呈现给用户。</p>
+<h2 id="gzip配置项"><a href="#gzip配置项" class="headerlink" title="gzip配置项"></a>gzip配置项</h2><p>Nginx 提供了专门的 Gzip 模块，在 nginx.conf 文件中</p>
+<blockquote>
+<ul>
+<li>gzip : 该指令用于开启或 关闭gzip模块。<br></li>
+<li>gzip_buffers : 设置系统获取几个单位的缓存用于存储gzip的压缩结果数据流。<br></li>
+<li>gzip_comp_level : gzip压缩比，压缩级别是1-9，1的压缩级别最低，9的压缩级别最高。压缩级别越高压缩率越大，压缩时间越长。<br></li>
+<li>gzip_disable : 可以通过该指令对一些特定的User-Agent不使用压缩功能。<br></li>
+<li>gzip_min_length:设置允许压缩的页面最小字节数，页面字节数从相应消息头的Content-length中进行获取。<br></li>
+<li>gzip_http_version：识别HTTP协议版本，其值可以是1.1.或1.0.<br></li>
+<li>gzip_proxied : 用于设置启用或禁用从代理服务器上收到相应内容gzip压缩。<br></li>
+<li>gzip_vary : 用于在响应消息头中添加Vary：Accept-Encoding,使代理服务器根据请求头中的Accept-Encoding识别是否启用gzip压缩。</li>
+</ul>
+</blockquote>
+<p><strong>gzip最简单的配置</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">//</span>   <span class="string">conf</span> <span class="string">/</span> <span class="string">nginx.conf</span></span><br><span class="line"><span class="string">http&#123;</span></span><br><span class="line">    <span class="string">.....</span></span><br><span class="line">    <span class="string">gzip</span> <span class="string">on;</span></span><br><span class="line">    <span class="string">gzip_types</span> <span class="string">text/plain</span> <span class="string">application/javascript</span> <span class="string">text/css;</span></span><br><span class="line">    <span class="string">.....</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>百度 “Gzip检查”就可查看网站是否有 Gzip 压缩</p>
+
+    </article>
+    <!-- license  -->
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/01/05/%E3%81%AE%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%84%E3%81%8B-%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%84%E3%81%8B%E7%9A%84%E5%8C%BA%E5%88%AB/" title= "のではないか  /  ではないか的区别">
+                    <div class="prevTitle">のではないか  /  ではないか的区别</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <div id="comment"></div>
+    <script>
+    new Valine({
+        el: '#comment' ,
+        notify:false, 
+        verify:false, 
+        appId: "5a6GwXcbsb2EBWlIMCPPi8lf-gzGzoHsz",
+        appKey: "mfx2NaWgQ4QHpXsk2BT17uBy",
+        placeholder: "Let`s comment !",
+        path:window.location.pathname, 
+        avatar:'mm' 
+    });
+    </script>
+
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+
+            <!-- Music -->
+            
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+                <style>
+                    @media (max-width:980px){
+                        #aplayer{
+                            display: none;
+                        }
+                    }
+                </style>
+                <!-- <div id="aplayer"></div> -->
+                <div id="aplayer" style="position:absolute;right:15px;top:15px;border-radius: 8px;"></div>
+                <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/color-thief-don@2.0.2/src/color-thief.js"></script>
+                <script>
+                  const ap = new APlayer({
+                    container: document.getElementById('aplayer'),
+                    autoplay: false, //自动播放
+                    listFolded: true, //播放列表默认折叠
+                    listMaxHeight: 90, //播放列表最大高度
+                    order: 'list', //音频循环顺序, 可选值: 'list', 'random'
+                    loop: 'all', //音频循环播放, 可选值: 'all', 'one', 'none'
+                    theme: '#e9e9e9', //切换音频时的主题色，优先级低于audio.theme
+                    preload: 'none', //音频预加载，可选值: 'none', 'metadata', 'auto'
+                    mutex: true, //互斥，阻止多个播放器同时播放，当前播放器播放时暂停其他播放器
+                    lrcType: 3, //歌词格式，可选值：3（LRC文件歌词格式），1（JS字符串歌词格式）
+                    volume: 0.7, //默认音量，请注意播放器会记忆用户设置，用户手动设置音量后默认音量即失效
+                    //fixed: false, //吸底模式（fixed:true），迷你模式（mini:true），普通模式（注释此行或者设置fixed:false）
+                    mini:true,
+                    audio: {
+                        name: 'Brand New Story.mp3',
+                        cover:'/music/cover.jpg',
+                        url: '/music/Brand New Story.mp3'
+                      }
+                  });
+                
+                  //实现切换音频时，根据音频的封面图片自适应主题色
+                  const colorThief = new ColorThief();
+                  const setTheme = (index) => {
+                    if (!ap.list.audios[index].theme) {
+                      colorThief.getColorAsync(ap.list.audios[index].cover, function(color) {
+                        ap.theme(`rgb(${color[0]}, ${color[1]}, ${color[2]})`, index);
+                      });
+                    }
+                  };
+                  setTheme(ap.list.index);
+                  ap.on('listswitch', (data) => {
+                    setTheme(data.index);
+                  });
+                </script>
+                
+
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:617109354@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/CZQ-kyon" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/wechat.jpg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span> <span class="iconfont-archer power">&#xe635;</span><span id="theme-info">author <a href="https://github.com/CZQ-kyon" target="_blank">CZQ-kyon</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、Nginx-常用命令"><span class="toc-number">1.</span> <span class="toc-text">一、Nginx 常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、启动命令"><span class="toc-number">1.1.</span> <span class="toc-text">1、启动命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、等待进程结束后，停止命令（推荐）"><span class="toc-number">1.2.</span> <span class="toc-text">3、等待进程结束后，停止命令（推荐）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、重启命令"><span class="toc-number">1.3.</span> <span class="toc-text">4、重启命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、查看版本"><span class="toc-number">1.4.</span> <span class="toc-text">5、查看版本</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、Windows-下的nginx文件夹目录结构"><span class="toc-number">2.</span> <span class="toc-text">二、Windows 下的nginx文件夹目录结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、简单的访问控制"><span class="toc-number">3.</span> <span class="toc-text">三、简单的访问控制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、错误发生指定方式"><span class="toc-number">4.</span> <span class="toc-text">四、错误发生指定方式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、多错误指向一个页面"><span class="toc-number">4.1.</span> <span class="toc-text">1、多错误指向一个页面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、单独为错误指定处理方式"><span class="toc-number">4.2.</span> <span class="toc-text">2、单独为错误指定处理方式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、设置虚拟主机"><span class="toc-number">5.</span> <span class="toc-text">五、设置虚拟主机</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#概念："><span class="toc-number">5.1.</span> <span class="toc-text">概念：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1、基于端口号配置虚拟主机"><span class="toc-number">5.2.</span> <span class="toc-text">1、基于端口号配置虚拟主机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、基于IP配置虚拟主机"><span class="toc-number">5.3.</span> <span class="toc-text">2、基于IP配置虚拟主机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、基于域名配置虚拟主机"><span class="toc-number">5.4.</span> <span class="toc-text">3、基于域名配置虚拟主机</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、正向代理和反向代理"><span class="toc-number">6.</span> <span class="toc-text">六、正向代理和反向代理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、正向代理"><span class="toc-number">6.1.</span> <span class="toc-text">1、正向代理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、反向代理"><span class="toc-number">6.2.</span> <span class="toc-text">2、反向代理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#a、反向代理的好处："><span class="toc-number">6.2.1.</span> <span class="toc-text">a、反向代理的好处：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#b、其他反向代理指令："><span class="toc-number">6.2.2.</span> <span class="toc-text">b、其他反向代理指令：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#七、Nginx适配PC和移动设备"><span class="toc-number">7.</span> <span class="toc-text">七、Nginx适配PC和移动设备</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#八、Nginx的Gzip压缩配置"><span class="toc-number">8.</span> <span class="toc-text">八、Nginx的Gzip压缩配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#gzip配置项"><span class="toc-number">8.1.</span> <span class="toc-text">gzip配置项</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 3
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/06</span><a class="archive-post-title" href= "/2020/01/06/Nginx%E7%9A%84%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BD%BF%E7%94%A8/" >Nginx的简单配置和使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/05</span><a class="archive-post-title" href= "/2020/01/05/%E3%81%AE%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%84%E3%81%8B-%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%84%E3%81%8B%E7%9A%84%E5%8C%BA%E5%88%AB/" >のではないか  /  ではないか的区别</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/04</span><a class="archive-post-title" href= "/2020/01/04/VScode%E4%B8%AD%E4%BD%BF%E7%94%A8Github%E7%AE%A1%E7%90%86%E9%A1%B9%E7%9B%AE/" >VScode中使用Github管理项目</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
+    
+        <span class="sidebar-tag-name" data-tags="web"><span class="iconfont-archer">&#xe606;</span>web</span>
+    
+        <span class="sidebar-tag-name" data-tags="Github"><span class="iconfont-archer">&#xe606;</span>Github</span>
+    
+        <span class="sidebar-tag-name" data-tags="日本語"><span class="iconfont-archer">&#xe606;</span>日本語</span>
+    
+        <span class="sidebar-tag-name" data-tags="nginx"><span class="iconfont-archer">&#xe606;</span>nginx</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="Study"><span class="iconfont-archer">&#xe60a;</span>Study</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "John Doe"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+
