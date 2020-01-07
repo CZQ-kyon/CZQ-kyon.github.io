@@ -401,13 +401,16 @@ height:50vh;
             <main class="main post-page">
     <article class="article-entry">
         <p>&emsp;&emsp;由于毕业设计的需求，前阵子简单学习了怎么简单使用 Nginx 在阿里云ECS上配置一个HTTP服务器，使用的系统是Windows。为了在忘记操作时可以复习，现在记一些在学习过程中的笔记。</p>
-<h2 id="一、Nginx-常用命令"><a href="#一、Nginx-常用命令" class="headerlink" title="一、Nginx 常用命令"></a>一、Nginx 常用命令</h2><h3 id="1、启动命令"><a href="#1、启动命令" class="headerlink" title="1、启动命令"></a>1、启动命令</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">start</span> <span class="string">nginx</span></span><br><span class="line"><span class="string">```</span>  </span><br><span class="line"></span><br><span class="line"><span class="comment">### 2、不等待进程结束，直接停止命令</span></span><br><span class="line"></span><br><span class="line"><span class="string">```yaml</span></span><br><span class="line"><span class="string">nginx</span> <span class="string">-s</span> <span class="string">stop</span></span><br></pre></td></tr></table></figure>
+<h2 id="一、Nginx-常用命令"><a href="#一、Nginx-常用命令" class="headerlink" title="一、Nginx 常用命令"></a>一、Nginx 常用命令</h2><h3 id="1、启动命令"><a href="#1、启动命令" class="headerlink" title="1、启动命令"></a>1、启动命令</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">start</span> <span class="string">nginx</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2、不等待进程结束，直接停止命令"><a href="#2、不等待进程结束，直接停止命令" class="headerlink" title="2、不等待进程结束，直接停止命令"></a>2、不等待进程结束，直接停止命令</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">nginx</span> <span class="string">-s</span> <span class="string">stop</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="3、等待进程结束后，停止命令（推荐）"><a href="#3、等待进程结束后，停止命令（推荐）" class="headerlink" title="3、等待进程结束后，停止命令（推荐）"></a>3、等待进程结束后，停止命令（推荐）</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">nginx</span> <span class="string">-s</span> <span class="string">quit</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="4、重启命令"><a href="#4、重启命令" class="headerlink" title="4、重启命令"></a>4、重启命令</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">nginx</span> <span class="string">-s</span> <span class="string">reload</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="5、查看版本"><a href="#5、查看版本" class="headerlink" title="5、查看版本"></a>5、查看版本</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">nginx</span> <span class="string">-v</span></span><br></pre></td></tr></table></figure>
+
 <p>如果 查看版本显示得出来，则说明 Nginx 安装成功</p>
 <br>
 
@@ -544,6 +547,11 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2020/01/07/%E3%81%AA%E3%81%84%E3%81%93%E3%81%A8%E3%81%AF%E3%81%AA%E3%81%84-%E3%81%AA%E3%81%84%E3%81%A7%E3%81%AF%E3%81%84%E3%82%89%E3%82%8C%E3%81%AA%E3%81%84/" title= "...ないことはない/...ないではいられない">
+                    <div class="nextTitle">...ないことはない/...ないではいられない</div>
+                </a>
+            
         </li>
         <li class="previous">
             
@@ -587,59 +595,6 @@ height:50vh;
 </main>
             <!-- profile -->
             
-
-            <!-- Music -->
-            
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
-                <style>
-                    @media (max-width:980px){
-                        #aplayer{
-                            display: none;
-                        }
-                    }
-                </style>
-                <!-- <div id="aplayer"></div> -->
-                <div id="aplayer" style="position:absolute;right:15px;top:15px;border-radius: 8px;"></div>
-                <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/color-thief-don@2.0.2/src/color-thief.js"></script>
-                <script>
-                  const ap = new APlayer({
-                    container: document.getElementById('aplayer'),
-                    autoplay: false, //自动播放
-                    listFolded: true, //播放列表默认折叠
-                    listMaxHeight: 90, //播放列表最大高度
-                    order: 'list', //音频循环顺序, 可选值: 'list', 'random'
-                    loop: 'all', //音频循环播放, 可选值: 'all', 'one', 'none'
-                    theme: '#e9e9e9', //切换音频时的主题色，优先级低于audio.theme
-                    preload: 'none', //音频预加载，可选值: 'none', 'metadata', 'auto'
-                    mutex: true, //互斥，阻止多个播放器同时播放，当前播放器播放时暂停其他播放器
-                    lrcType: 3, //歌词格式，可选值：3（LRC文件歌词格式），1（JS字符串歌词格式）
-                    volume: 0.7, //默认音量，请注意播放器会记忆用户设置，用户手动设置音量后默认音量即失效
-                    //fixed: false, //吸底模式（fixed:true），迷你模式（mini:true），普通模式（注释此行或者设置fixed:false）
-                    mini:true,
-                    audio: {
-                        name: 'Brand New Story.mp3',
-                        cover:'/music/cover.jpg',
-                        url: '/music/Brand New Story.mp3'
-                      }
-                  });
-                
-                  //实现切换音频时，根据音频的封面图片自适应主题色
-                  const colorThief = new ColorThief();
-                  const setTheme = (index) => {
-                    if (!ap.list.audios[index].theme) {
-                      colorThief.getColorAsync(ap.list.audios[index].cover, function(color) {
-                        ap.theme(`rgb(${color[0]}, ${color[1]}, ${color[2]})`, index);
-                      });
-                    }
-                  };
-                  setTheme(ap.list.index);
-                  ap.on('listswitch', (data) => {
-                    setTheme(data.index);
-                  });
-                </script>
-                
-
         </div>
         <footer class="footer footer-unloaded">
     <!-- social  -->
@@ -737,7 +692,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、Nginx-常用命令"><span class="toc-text">一、Nginx 常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、启动命令"><span class="toc-text">1、启动命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、等待进程结束后，停止命令（推荐）"><span class="toc-text">3、等待进程结束后，停止命令（推荐）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、重启命令"><span class="toc-text">4、重启命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、查看版本"><span class="toc-text">5、查看版本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、Windows-下的nginx文件夹目录结构"><span class="toc-text">二、Windows 下的nginx文件夹目录结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、简单的访问控制"><span class="toc-text">三、简单的访问控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、错误发生指定方式"><span class="toc-text">四、错误发生指定方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、多错误指向一个页面"><span class="toc-text">1、多错误指向一个页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、单独为错误指定处理方式"><span class="toc-text">2、单独为错误指定处理方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、设置虚拟主机"><span class="toc-text">五、设置虚拟主机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#概念："><span class="toc-text">概念：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1、基于端口号配置虚拟主机"><span class="toc-text">1、基于端口号配置虚拟主机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、基于IP配置虚拟主机"><span class="toc-text">2、基于IP配置虚拟主机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、基于域名配置虚拟主机"><span class="toc-text">3、基于域名配置虚拟主机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六、正向代理和反向代理"><span class="toc-text">六、正向代理和反向代理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、正向代理"><span class="toc-text">1、正向代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、反向代理"><span class="toc-text">2、反向代理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a、反向代理的好处："><span class="toc-text">a、反向代理的好处：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b、其他反向代理指令："><span class="toc-text">b、其他反向代理指令：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#七、Nginx适配PC和移动设备"><span class="toc-text">七、Nginx适配PC和移动设备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#八、Nginx的Gzip压缩配置"><span class="toc-text">八、Nginx的Gzip压缩配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#gzip配置项"><span class="toc-text">gzip配置项</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、Nginx-常用命令"><span class="toc-text">一、Nginx 常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、启动命令"><span class="toc-text">1、启动命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、不等待进程结束，直接停止命令"><span class="toc-text">2、不等待进程结束，直接停止命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、等待进程结束后，停止命令（推荐）"><span class="toc-text">3、等待进程结束后，停止命令（推荐）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、重启命令"><span class="toc-text">4、重启命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、查看版本"><span class="toc-text">5、查看版本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、Windows-下的nginx文件夹目录结构"><span class="toc-text">二、Windows 下的nginx文件夹目录结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、简单的访问控制"><span class="toc-text">三、简单的访问控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、错误发生指定方式"><span class="toc-text">四、错误发生指定方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、多错误指向一个页面"><span class="toc-text">1、多错误指向一个页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、单独为错误指定处理方式"><span class="toc-text">2、单独为错误指定处理方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、设置虚拟主机"><span class="toc-text">五、设置虚拟主机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#概念："><span class="toc-text">概念：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1、基于端口号配置虚拟主机"><span class="toc-text">1、基于端口号配置虚拟主机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、基于IP配置虚拟主机"><span class="toc-text">2、基于IP配置虚拟主机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、基于域名配置虚拟主机"><span class="toc-text">3、基于域名配置虚拟主机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六、正向代理和反向代理"><span class="toc-text">六、正向代理和反向代理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、正向代理"><span class="toc-text">1、正向代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、反向代理"><span class="toc-text">2、反向代理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a、反向代理的好处："><span class="toc-text">a、反向代理的好处：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b、其他反向代理指令："><span class="toc-text">b、其他反向代理指令：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#七、Nginx适配PC和移动设备"><span class="toc-text">七、Nginx适配PC和移动设备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#八、Nginx的Gzip压缩配置"><span class="toc-text">八、Nginx的Gzip压缩配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#gzip配置项"><span class="toc-text">gzip配置项</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -777,9 +732,18 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 3
+        Total : 4
         </div>
         <!-- search  -->
         
@@ -792,6 +756,11 @@ top:50vh;
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/07</span><a class="archive-post-title" href= "/2020/01/07/%E3%81%AA%E3%81%84%E3%81%93%E3%81%A8%E3%81%AF%E3%81%AA%E3%81%84-%E3%81%AA%E3%81%84%E3%81%A7%E3%81%AF%E3%81%84%E3%82%89%E3%82%8C%E3%81%AA%E3%81%84/" >...ないことはない/...ないではいられない</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -813,13 +782,13 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="日本語"><span class="iconfont-archer">&#xe606;</span>日本語</span>
-    
         <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
     
         <span class="sidebar-tag-name" data-tags="web"><span class="iconfont-archer">&#xe606;</span>web</span>
     
         <span class="sidebar-tag-name" data-tags="Github"><span class="iconfont-archer">&#xe606;</span>Github</span>
+    
+        <span class="sidebar-tag-name" data-tags="日本語"><span class="iconfont-archer">&#xe606;</span>日本語</span>
     
         <span class="sidebar-tag-name" data-tags="nginx"><span class="iconfont-archer">&#xe606;</span>nginx</span>
     
