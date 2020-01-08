@@ -22,7 +22,7 @@
     <meta name="description" content="">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>...ないことはない/...ないではいられない · CZQ-kyon&#39;s Studio</title>
+    <title>nvm与npm的介绍 · CZQ-kyon&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -216,7 +216,7 @@
                 <a href="/" >CZQ-kyon&#39;s Studio.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">...ないことはない/...ないではいられない</a>
+                <a href="#" class="post-name">nvm与npm的介绍</a>
             </div>
     </div>
     
@@ -246,7 +246,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            ...ないことはない/...ないではいられない
+            nvm与npm的介绍
             <!-- 404 -->
             
         </h1>
@@ -265,18 +265,22 @@ height:50vh;
                 
                     <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "日本語">日本語</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Node.js">Node.js</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "nvm">nvm</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "npm">npm</a>
     
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">368</span>Reading time: <span class="post-count reading-time">1 min</span></span>
+                        <span>Word count: <span class="post-count word-count">663</span>Reading time: <span class="post-count reading-time">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2020/01/07</span>
+                    <span class="post-intro-time">2020/01/08</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -400,81 +404,66 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>&emsp;这两个文法单独学习的时候还是挺容易的。生啃一遍蓝宝书，做题还是给搞懵了，然后在经过一番死记硬背的折磨后，发现人脑是脆弱的，还是多看例句培养语感来得实在。</p>
-<h2 id="1、…ないことはない"><a href="#1、…ないことはない" class="headerlink" title="1、…ないことはない"></a>1、…ないことはない</h2><p>&emsp;有以下几个意思：</p>
-<ul>
-<li><p><strong>不可能不…</strong>  </p>
-</li>
-<li><p><strong>一定…</strong></p>
-</li>
-<li><p><strong>不是不…</strong></p>
-</li>
-<li><p><strong>不会不…</strong></p>
-</li>
-</ul>
-<p>(双重否定 表示的是<font color="orange"> 肯定的 </font>)  </p>
-<ol>
-<li>残り時間は少ないが、やる気があればできないことはない。<br>虽然所剩时间不多，但只要肯做，也不是办不到。</li>
-</ol>
+        <h2 id="一、NVM"><a href="#一、NVM" class="headerlink" title="一、NVM"></a>一、NVM</h2><p>&emsp;nvm 是 node version manage 的简写，直译的意思就是 node 的版本管理工具。</p>
+<h2 id="1、安装步骤"><a href="#1、安装步骤" class="headerlink" title="1、安装步骤"></a>1、安装步骤</h2><h3 id="1-1、下载NVM-for-Windows"><a href="#1-1、下载NVM-for-Windows" class="headerlink" title="1.1、下载NVM for Windows"></a>1.1、下载NVM for Windows</h3><blockquote>
+<p><a href="https://github.com/coreybutler/nvm-windows/releases" target="_blank" rel="noopener">https://github.com/coreybutler/nvm-windows/releases</a></p>
+</blockquote>
+<p>这里选择 nvm-setup.zip 这个选项</p>
+<p><img src="/2020/01/08/nvm%E4%B8%8Enpm%E7%9A%84%E4%BB%8B%E7%BB%8D/download.png" alt="下载nvm"></p>
+<p>nvm-setup.zip：这是一个安装包，下载之后点击安装，无需配置就可以使用。  </p>
 <br>
 
-<ol start="2">
-<li>行きたくないことはないが、あまり気がすすまない。<br>不是不想去，而是不太起劲。</li>
-</ol>
+<h4 id="1-、-解压后运行安装包，其中有一步是-：-Set-Node-js-Symlink"><a href="#1-、-解压后运行安装包，其中有一步是-：-Set-Node-js-Symlink" class="headerlink" title="(1)、 解压后运行安装包，其中有一步是 ： Set Node.js Symlink"></a>(1)、 解压后运行安装包，其中有一步是 ： Set Node.js Symlink</h4><p><img src="/2020/01/08/nvm%E4%B8%8Enpm%E7%9A%84%E4%BB%8B%E7%BB%8D/%E5%AE%89%E8%A3%85.png" alt="安装"></p>
+<p>这里是设置 Node.js 的快捷方式存放的目录，该目录是一个快捷方式，指向通过 nvm 下载的 Node.js 存放的位置，也就是 nvm 目录里的文件,也就是下图框红的部分。</p>
+<p><img src="/2020/01/08/nvm%E4%B8%8Enpm%E7%9A%84%E4%BB%8B%E7%BB%8D/nvm%E7%9B%AE%E5%BD%95.jpg" alt="nvm目录"></p>
+<h4 id="2-、安装完成后在cmd界面输入-nvm-，如果出现-nvm-版本号和一系列帮助指令，则说明安装成功"><a href="#2-、安装完成后在cmd界面输入-nvm-，如果出现-nvm-版本号和一系列帮助指令，则说明安装成功" class="headerlink" title="(2)、安装完成后在cmd界面输入 nvm ，如果出现 nvm 版本号和一系列帮助指令，则说明安装成功"></a>(2)、安装完成后在cmd界面输入 nvm ，如果出现 nvm 版本号和一系列帮助指令，则说明安装成功</h4><p><img src="/2020/01/08/nvm%E4%B8%8Enpm%E7%9A%84%E4%BB%8B%E7%BB%8D/nvmsuccess.png" alt="安装nvm成功"></p>
 <br>
 
-<ol start="3">
-<li>言葉は通じないが、コミュニケーションができないことはない。<br>虽然语言不通，但也不是无法沟通。</li>
-</ol>
+<h2 id="2、常用指令"><a href="#2、常用指令" class="headerlink" title="2、常用指令"></a>2、常用指令</h2><h4 id="1-、下载，编译并安装最新版的-Node-js："><a href="#1-、下载，编译并安装最新版的-Node-js：" class="headerlink" title="(1)、下载，编译并安装最新版的 Node.js："></a>(1)、下载，编译并安装最新版的 Node.js：</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">nvm</span> <span class="string">install</span> <span class="string">node</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-、安装指定版本的-Node-js"><a href="#2-、安装指定版本的-Node-js" class="headerlink" title="(2)、安装指定版本的 Node.js:"></a>(2)、安装指定版本的 Node.js:</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">nvm</span> <span class="string">install</span> <span class="number">10.13</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-、查看本地上已安装的-Node-js-版本："><a href="#3-、查看本地上已安装的-Node-js-版本：" class="headerlink" title="(3)、查看本地上已安装的 Node.js 版本："></a>(3)、查看本地上已安装的 Node.js 版本：</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">nvm</span> <span class="string">ls</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="4-、使用某个版本的Node-js："><a href="#4-、使用某个版本的Node-js：" class="headerlink" title="(4)、使用某个版本的Node.js："></a>(4)、使用某个版本的Node.js：</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">nvm</span> <span class="string">use</span> <span class="number">10.13</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="5-、卸载指定版本的-Node-js："><a href="#5-、卸载指定版本的-Node-js：" class="headerlink" title="(5)、卸载指定版本的 Node.js："></a>(5)、卸载指定版本的 Node.js：</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">nvm</span> <span class="string">uninstall</span> <span class="number">10.13</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
+
 <br>
 
-<ol start="4">
-<li>お酒を飲まないことはないですが、<u>胃腸</u>(いちょう) が弱いので、飲んだらすぐ <u>下痢</u>(げり) になります。<br>不是不喝酒，只是肠胃不好，喝了马上拉肚子。</li>
-</ol>
+<h2 id="二、NPM"><a href="#二、NPM" class="headerlink" title="二、NPM"></a>二、NPM</h2><p>&emsp;npm 是 node package manage 的简写，直译的意思就是 node 的包管理工具。</p>
+<p><font color="red">注意：</font><br>在每个版本的nodejs中，都会自带npm，为了统一起见，我们安装一个全局的npm工具，这个操作很有必要，因为我们需要安装一些全局的其他包，不会因为切换node版本造成原来下载过的包不可用。</p>
+<h3 id="1、安装步骤-1"><a href="#1、安装步骤-1" class="headerlink" title="1、安装步骤"></a>1、安装步骤</h3><h4 id="1-、进入-cmd-界面，输入："><a href="#1-、进入-cmd-界面，输入：" class="headerlink" title="(1)、进入 cmd 界面，输入："></a>(1)、进入 cmd 界面，输入：</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">npm</span> <span class="string">config</span> <span class="string">set</span> <span class="string">prefix</span> <span class="string">"npm 的全局安装路径"</span></span><br></pre></td></tr></table></figure>
+
+<p>这个全局安装路径是使用 -g 安装包时的地址，一般设在安装 nvm 目录下的 npm 中。</p>
 <br>
 
-<ol start="5">
-<li>できないことはないですが、やりたくないだけです。<br>不是不会，就是不想做。</li>
-</ol>
+<h4 id="2-、执行完成后会在-C盘-用户目录-用户名-下生成一个-npmrc-的文件"><a href="#2-、执行完成后会在-C盘-用户目录-用户名-下生成一个-npmrc-的文件" class="headerlink" title="(2)、执行完成后会在 C盘 / 用户目录 / 用户名 下生成一个 .npmrc 的文件"></a>(2)、执行完成后会在 C盘 / 用户目录 / 用户名 下生成一个 .npmrc 的文件</h4><p><img src="/2020/01/08/nvm%E4%B8%8Enpm%E7%9A%84%E4%BB%8B%E7%BB%8D/npmrc.png" alt="npmrc"></p>
+<p>打开后输入:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">prefix=E:\nvm\npm</span></span><br><span class="line"><span class="string">cache=E:\nvm\npm-cache</span></span><br></pre></td></tr></table></figure>
+<p>prefix：是 Node.js 包的全局安装路径<br>cache：是 Node.js 包的缓存路径</p>
 <br>
 
-<hr>
+<h4 id="3-、在-cmd-命令行中输入"><a href="#3-、在-cmd-命令行中输入" class="headerlink" title="(3)、在 cmd 命令行中输入"></a>(3)、在 cmd 命令行中输入</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">npm</span> <span class="string">install</span> <span class="string">npm</span> <span class="string">-g</span></span><br></pre></td></tr></table></figure>
+
 <br>
 
-<h2 id="2、…ないではいられない"><a href="#2、…ないではいられない" class="headerlink" title="2、…ないではいられない"></a>2、…ないではいられない</h2><p>&emsp;有以下几个意思：</p>
-<ul>
-<li><p><strong>不能不…</strong>  </p>
-</li>
-<li><p><strong>不由得…</strong></p>
-</li>
-</ul>
-<p>(いられない，有表示<font color="orange"> 没有办法、控制不了 </font>之意)  </p>
-<ol>
-<li>困っている人をみると、助けてあげないではいられない。<br>看到有困难的人，不由得伸出援手。</li>
-</ol>
+<h4 id="4-、为这个-npm-配置环境变量"><a href="#4-、为这个-npm-配置环境变量" class="headerlink" title="(4)、为这个 npm 配置环境变量"></a>(4)、为这个 npm 配置环境变量</h4><p>变量名： NPM_HOME<br>变量值： npm 的全局安装地址</p>
+<p><img src="/2020/01/08/nvm%E4%B8%8Enpm%E7%9A%84%E4%BB%8B%E7%BB%8D/npm_home.png" alt="npm_home"></p>
 <br>
 
-<ol start="2">
-<li>その話を聞いて、笑わないではいられなかった。<br>听了那席话，不由得笑了出来。</li>
-</ol>
+<h4 id="5-、在-Path-的最前面添加-NPM-HOME-这个一定要添加在-NVM-SYMLINK-之前，所以直接把-NPM-HOME-放到-Path-的最前面"><a href="#5-、在-Path-的最前面添加-NPM-HOME-这个一定要添加在-NVM-SYMLINK-之前，所以直接把-NPM-HOME-放到-Path-的最前面" class="headerlink" title="(5)、在 Path 的最前面添加 %NPM_HOME% 这个一定要添加在 %NVM_SYMLINK% 之前，所以直接把 %NPM_HOME% 放到 Path 的最前面"></a><font color="red">(5)</font>、在 Path 的最前面添加 %NPM_HOME% 这个一定要添加在 %NVM_SYMLINK% 之前，所以直接把 %NPM_HOME% 放到 Path 的最前面</h4><p><img src="/2020/01/08/nvm%E4%B8%8Enpm%E7%9A%84%E4%BB%8B%E7%BB%8D/npmhome2.png" alt="npm_home"></p>
 <br>
 
-<ol start="3">
-<li>赤ちゃんを見ると、笑いかけずにはいられない。<br>看到婴儿，不由得露出微笑。</li>
-</ol>
+<h4 id="6-、安装-cnpm"><a href="#6-、安装-cnpm" class="headerlink" title="(6)、安装 cnpm"></a>(6)、安装 cnpm</h4><p>因为天朝墙的原因，有时使用 npm 下载会很慢，这时候使用 国内的镜像 cnpm 下载会快一些</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">npm</span> <span class="string">install</span> <span class="string">-g</span> <span class="string">cnpm</span> <span class="string">--registry=http://r.cnpmjs.org</span></span><br></pre></td></tr></table></figure>
+
 <br>
 
-<ol start="4">
-<li>あの映画のラストシーンは感動的で、涙を流さずにいられなかった。<br>那部电影的结局令人感动，禁不住流下来热泪。</li>
-</ol>
-<br>
-
-<ol start="5">
-<li>車の多い道路で遊んでいる子供を見て、注意せずにはいられなかった。<br>看到在车很多的道路上玩耍的孩子们，不由得提醒他们。</li>
-</ol>
-<br>
-
-<p>打完这些例句，感觉又找回那种 feel 了。</p>
+<h4 id="7-、配置-cnpm"><a href="#7-、配置-cnpm" class="headerlink" title="(7)、配置 cnpm"></a>(7)、配置 cnpm</h4><p>找到 cnpm.cmd 所在位置，就可以配置系统环境变量了</p>
+<p><img src="/2020/01/08/nvm%E4%B8%8Enpm%E7%9A%84%E4%BB%8B%E7%BB%8D/cnpm.png" alt="cnpm.cmd"></p>
+<p>在 Path 里面新建一个指向这个地址</p>
+<p><img src="/2020/01/08/nvm%E4%B8%8Enpm%E7%9A%84%E4%BB%8B%E7%BB%8D/cnpm2.png" alt="cnpm_path"></p>
 
     </article>
     <!-- license  -->
@@ -483,17 +472,12 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2020/01/08/nvm%E4%B8%8Enpm%E7%9A%84%E4%BB%8B%E7%BB%8D/" title= "nvm与npm的介绍">
-                    <div class="nextTitle">nvm与npm的介绍</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2020/01/06/Nginx%E7%9A%84%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BD%BF%E7%94%A8/" title= "Nginx的简单配置和使用">
-                    <div class="prevTitle">Nginx的简单配置和使用</div>
+                <a href= "/2020/01/07/%E3%81%AA%E3%81%84%E3%81%93%E3%81%A8%E3%81%AF%E3%81%AA%E3%81%84-%E3%81%AA%E3%81%84%E3%81%A7%E3%81%AF%E3%81%84%E3%82%89%E3%82%8C%E3%81%AA%E3%81%84/" title= "...ないことはない/...ないではいられない">
+                    <div class="prevTitle">...ないことはない/...ないではいられない</div>
                 </a>
             
         </li>
@@ -628,7 +612,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、…ないことはない"><span class="toc-text">1、…ないことはない</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、…ないではいられない"><span class="toc-text">2、…ないではいられない</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、NVM"><span class="toc-text">一、NVM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1、安装步骤"><span class="toc-text">1、安装步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1、下载NVM-for-Windows"><span class="toc-text">1.1、下载NVM for Windows</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-、-解压后运行安装包，其中有一步是-：-Set-Node-js-Symlink"><span class="toc-text">(1)、 解压后运行安装包，其中有一步是 ： Set Node.js Symlink</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-、安装完成后在cmd界面输入-nvm-，如果出现-nvm-版本号和一系列帮助指令，则说明安装成功"><span class="toc-text">(2)、安装完成后在cmd界面输入 nvm ，如果出现 nvm 版本号和一系列帮助指令，则说明安装成功</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、常用指令"><span class="toc-text">2、常用指令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-、下载，编译并安装最新版的-Node-js："><span class="toc-text">(1)、下载，编译并安装最新版的 Node.js：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-、安装指定版本的-Node-js"><span class="toc-text">(2)、安装指定版本的 Node.js:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-、查看本地上已安装的-Node-js-版本："><span class="toc-text">(3)、查看本地上已安装的 Node.js 版本：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-、使用某个版本的Node-js："><span class="toc-text">(4)、使用某个版本的Node.js：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-、卸载指定版本的-Node-js："><span class="toc-text">(5)、卸载指定版本的 Node.js：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、NPM"><span class="toc-text">二、NPM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、安装步骤-1"><span class="toc-text">1、安装步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-、进入-cmd-界面，输入："><span class="toc-text">(1)、进入 cmd 界面，输入：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-、执行完成后会在-C盘-用户目录-用户名-下生成一个-npmrc-的文件"><span class="toc-text">(2)、执行完成后会在 C盘 &#x2F; 用户目录 &#x2F; 用户名 下生成一个 .npmrc 的文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-、在-cmd-命令行中输入"><span class="toc-text">(3)、在 cmd 命令行中输入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-、为这个-npm-配置环境变量"><span class="toc-text">(4)、为这个 npm 配置环境变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-、在-Path-的最前面添加-NPM-HOME-这个一定要添加在-NVM-SYMLINK-之前，所以直接把-NPM-HOME-放到-Path-的最前面"><span class="toc-text">(5)、在 Path 的最前面添加 %NPM_HOME% 这个一定要添加在 %NVM_SYMLINK% 之前，所以直接把 %NPM_HOME% 放到 Path 的最前面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-、安装-cnpm"><span class="toc-text">(6)、安装 cnpm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-、配置-cnpm"><span class="toc-text">(7)、配置 cnpm</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
