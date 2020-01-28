@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="John Doe">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="John Doe">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>富文本编辑工具Tinymce入门使用 · CZQ-kyon&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >CZQ-kyon&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">富文本编辑工具Tinymce入门使用</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>CZQ-kyon's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            富文本编辑工具Tinymce入门使用
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Tinymce">Tinymce</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">1.6k</span>Reading time: <span class="post-count reading-time">7 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/01/27</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>&emsp;&emsp;  最近编写了一个基于 vue-cli 脚手架的具有评论功能的简单网页，这也是第一次接触到富文本编辑工具，在浏览了网上众多的评价后，最终选择了使用 Tinymce 进行开发。<br>&emsp;&emsp;  现在回过头写这篇笔记来重新整理一下学习过程。</p>
+<h2 id="一、在项目中安装-tinymce"><a href="#一、在项目中安装-tinymce" class="headerlink" title="一、在项目中安装 tinymce"></a>一、在项目中安装 tinymce</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">npm</span> <span class="string">install</span> <span class="string">tinymce</span> <span class="string">--save</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">npm</span> <span class="string">install</span> <span class="string">@tinymce/tinymce-vue</span> <span class="string">--save</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-安装完成后，可以去官网安装语言包："><a href="#1-安装完成后，可以去官网安装语言包：" class="headerlink" title="1.安装完成后，可以去官网安装语言包："></a>1.安装完成后，可以去官网安装语言包：</h4><blockquote>
+<p><a href="https://www.tiny.cloud/get-tiny/language-packages/" target="_blank" rel="noopener">https://www.tiny.cloud/get-tiny/language-packages/</a></p>
+</blockquote>
+<p>这里我们选择中文语言包。解压缩后在放到 vue 项目的 static 目录下：<br><img src="/2020/01/27/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/%E8%AF%AD%E8%A8%80%E5%8C%85.png" alt="语言包"></p>
+<p>在 static 目录下新建一个 tinymce 的文件夹，将语言包放到文件夹中。<br>在 node_modules 文件中找到 tinymce ，将 skins 文件夹复制到 static 文件夹下，方便后面我们对编辑框的样式进行自定义修改。</p>
+<br>
+
+<h2 id="二、tinymce-的使用"><a href="#二、tinymce-的使用" class="headerlink" title="二、tinymce 的使用"></a>二、tinymce 的使用</h2><h4 id="1-封装-tinymce-组件"><a href="#1-封装-tinymce-组件" class="headerlink" title="1.封装 tinymce 组件"></a>1.封装 tinymce 组件</h4><p>在 <strong>components</strong>组件文件夹中新建一个 tinymce.vue ，把 tinymce 封装成组件。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"tinymce-box"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">editor</span> <span class="attr">v-model</span>=<span class="string">"myValue"</span></span></span><br><span class="line"><span class="tag">          <span class="attr">:init</span>=<span class="string">"init"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">editor</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> tinymce <span class="keyword">from</span> <span class="string">"tinymce/tinymce"</span>; <span class="comment">//tinymce默认hidden，不引入不显示</span></span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> Editor <span class="keyword">from</span> <span class="string">"@tinymce/tinymce-vue"</span>;</span></span><br><span class="line"><span class="actionscript"><span class="meta"><span class="meta-keyword">import</span> "tinymce/themes/silver";</span></span></span><br><span class="line"><span class="actionscript"><span class="comment">// 编辑器插件plugins</span></span></span><br><span class="line"><span class="actionscript"><span class="meta"><span class="meta-keyword">import</span> "tinymce/plugins/image";</span> <span class="comment">// 插入上传图片插件</span></span></span><br><span class="line"><span class="actionscript"><span class="meta"><span class="meta-keyword">import</span> "tinymce/plugins/table";</span> <span class="comment">// 插入表格插件</span></span></span><br><span class="line"><span class="actionscript"><span class="meta"><span class="meta-keyword">import</span> "tinymce/plugins/lists";</span> <span class="comment">// 列表插件</span></span></span><br><span class="line"><span class="actionscript"><span class="meta"><span class="meta-keyword">import</span> "tinymce/plugins/wordcount";</span> <span class="comment">// 字数统计插件</span></span></span><br><span class="line"><span class="actionscript"><span class="meta"><span class="meta-keyword">import</span> "tinymce/plugins/placeholder";</span> <span class="comment">// 默认提示文字插件</span></span></span><br><span class="line"><span class="actionscript"><span class="meta"><span class="meta-keyword">import</span> "tinymce/plugins/fullscreen";</span> <span class="comment">// 全屏插件</span></span></span><br><span class="line"></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">  components: &#123;</span><br><span class="line">    Editor</span><br><span class="line">  &#125;,</span><br><span class="line"><span class="actionscript">  name: <span class="string">"tinymce"</span>,</span></span><br><span class="line">  props: &#123;</span><br><span class="line">    value: &#123;</span><br><span class="line"><span class="javascript">      type: <span class="built_in">String</span>,</span></span><br><span class="line"><span class="actionscript">      <span class="keyword">default</span>: <span class="string">""</span></span></span><br><span class="line">    &#125;,</span><br><span class="line">    disabled: &#123;</span><br><span class="line"><span class="javascript">      type: <span class="built_in">Boolean</span>,</span></span><br><span class="line"><span class="actionscript">      <span class="keyword">default</span>: <span class="literal">false</span></span></span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: &#123;</span><br><span class="line"><span class="javascript">      type: [<span class="built_in">String</span>, <span class="built_in">Array</span>],</span></span><br><span class="line"><span class="actionscript">      <span class="keyword">default</span>: <span class="string">"lists image table wordcount placeholder fullscreen"</span></span></span><br><span class="line">    &#125;,</span><br><span class="line">    toolbar: &#123;</span><br><span class="line"><span class="javascript">      type: [<span class="built_in">String</span>, <span class="built_in">Array</span>],</span></span><br><span class="line"><span class="actionscript">      <span class="keyword">default</span>:</span></span><br><span class="line"><span class="actionscript">        <span class="string">"undo redo |  formatselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | lists image table | removeformat | fullscreen"</span></span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  data() &#123;</span><br><span class="line"><span class="actionscript">    <span class="keyword">return</span> &#123;</span></span><br><span class="line">      init: &#123;</span><br><span class="line"><span class="actionscript">        <span class="comment">//这里填入的位置是static中的中文语言包的位置</span></span></span><br><span class="line"><span class="actionscript">        language_url: <span class="string">"/static/tinymce/langs/zh_CN.js"</span>,</span></span><br><span class="line"><span class="actionscript">        language: <span class="string">"zh_CN"</span>,</span></span><br><span class="line"><span class="actionscript">        <span class="comment">//这里填入的位置是 static 中的皮肤 css</span></span></span><br><span class="line"><span class="actionscript">        skin_url: <span class="string">"/static/tinymce/skins/ui/oxide"</span>,</span></span><br><span class="line"><span class="actionscript">        <span class="comment">// skin_url: '/static/tinymce/skins/ui/oxide-dark',//暗色系</span></span></span><br><span class="line">        height: 420,</span><br><span class="line"><span class="actionscript">        resize: <span class="literal">false</span>, <span class="comment">//可拖动标记关闭</span></span></span><br><span class="line"><span class="actionscript">        statusbar: <span class="literal">false</span>, <span class="comment">//左下角状态栏隐藏</span></span></span><br><span class="line"><span class="actionscript">        plugins: <span class="keyword">this</span>.plugins,</span></span><br><span class="line"><span class="actionscript">        toolbar: <span class="keyword">this</span>.toolbar,</span></span><br><span class="line"><span class="actionscript">        branding: <span class="literal">false</span>,</span></span><br><span class="line"><span class="actionscript">        menubar: <span class="literal">false</span>,</span></span><br><span class="line"><span class="actionscript">        <span class="comment">// 图片上传处理函数</span></span></span><br><span class="line"><span class="javascript">        images_upload_handler: <span class="function">(<span class="params">blobInfo, success, failure</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="actionscript">          <span class="comment">//此处填写上传逻辑代码</span></span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line"><span class="actionscript">      myValue: <span class="keyword">this</span>.value</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  mounted() &#123;</span><br><span class="line">    tinymce.init(&#123;&#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">  watch: &#123;</span><br><span class="line">    value(newValue) &#123;</span><br><span class="line"><span class="actionscript">      <span class="keyword">this</span>.myValue = newValue;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    myValue(newValue) &#123;</span><br><span class="line"><span class="actionscript">      <span class="keyword">this</span>.$emit(<span class="string">"input"</span>, newValue);</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果想在富文本中引入其他的插件，可以在官方文档中找到相关的插件信息，然后通过  <code>import &quot;tinymce/plugins/插件&quot;</code>，引入。</p>
+<p>引入后在 props 中的 plugins 里填入插件名称</p>
+<p><strong>例：(引入ABAB插件)</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">props: &#123;</span><br><span class="line">    plugins: &#123;</span><br><span class="line">      type: [<span class="built_in">String</span>, <span class="built_in">Array</span>],</span><br><span class="line">      <span class="keyword">default</span>: <span class="string">"ABAB"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>官方文档地址：<a href="https://www.tiny.cloud/docs/" target="_blank" rel="noopener">https://www.tiny.cloud/docs/</a></p>
+</blockquote>
+<br>
+
+<h4 id="2-组件引用"><a href="#2-组件引用" class="headerlink" title="2.组件引用"></a>2.组件引用</h4><p>新建组件，对 tinymce.vue 组件进行引用</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"home"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tinymce</span></span></span><br><span class="line"><span class="tag">        <span class="attr">ref</span>=<span class="string">"editor"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">v-model</span>=<span class="string">"msg"</span></span></span><br><span class="line"><span class="tag">    /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"clear"</span>&gt;</span>清空内容<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> tinymce <span class="keyword">from</span> <span class="string">'@/components/tinymce.vue'</span></span></span><br><span class="line"></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="actionscript">    name: <span class="string">'home'</span>,</span></span><br><span class="line">    components: &#123;</span><br><span class="line">        tinymce</span><br><span class="line">    &#125;,</span><br><span class="line">    data()&#123;</span><br><span class="line"><span class="actionscript">        <span class="keyword">return</span>&#123;</span></span><br><span class="line"><span class="actionscript">            msg: <span class="string">'Welcome to Use Tinymce Editor'</span>,</span></span><br><span class="line"><span class="actionscript">                    disabled: <span class="literal">false</span></span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line"><span class="actionscript">        <span class="comment">// 清空内容</span></span></span><br><span class="line">        clear () &#123;</span><br><span class="line"><span class="actionscript">            <span class="keyword">this</span>.$refs.editor.clear()</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="三、对-Tinymce-进行自定义修改"><a href="#三、对-Tinymce-进行自定义修改" class="headerlink" title="三、对 Tinymce 进行自定义修改"></a>三、对 Tinymce 进行自定义修改</h2><h4 id="1-增加类似-placeholder-功能插件"><a href="#1-增加类似-placeholder-功能插件" class="headerlink" title="1.增加类似 placeholder 功能插件"></a>1.增加类似 placeholder 功能插件</h4><p>为富文本编辑框中添加类似 input 中 placeholder 的功能，默认不点击时会出现文件，进行点击后文字消失，效果如下：  </p>
+<p><img src="/2020/01/27/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/placeholder.png" alt="placeholder功能"></p>
+<h5 id="1-1-增加-placeholder-插件"><a href="#1-1-增加-placeholder-插件" class="headerlink" title="1.1 .增加 placeholder 插件"></a>1.1 .增加 placeholder 插件</h5><p>在 <strong>node_modules</strong> 中的 <strong>tinymce</strong> 文件夹下的 <strong>plugins</strong> 里新建一个 <strong>placeholder</strong> 文件夹，里面新建一个 index.js：</p>
+<p><img src="/2020/01/27/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/plugins.png" alt="plugins"></p>
+<p>代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">tinymce.PluginManager.add(<span class="string">'placeholder'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">editor</span>) </span>&#123;</span><br><span class="line">    editor.on(<span class="string">'init'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> label = <span class="keyword">new</span> Label;</span><br><span class="line"></span><br><span class="line">        onBlur();</span><br><span class="line"></span><br><span class="line">        tinymce.DOM.bind(label.el, <span class="string">'click'</span>, onFocus);</span><br><span class="line">        editor.on(<span class="string">'focus'</span>, onFocus);</span><br><span class="line">        editor.on(<span class="string">'blur'</span>, onBlur);</span><br><span class="line">        editor.on(<span class="string">'change'</span>, onBlur);</span><br><span class="line">        editor.on(<span class="string">'setContent'</span>, onBlur);</span><br><span class="line">        editor.on(<span class="string">'keydown'</span>, onKeydown);</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">onFocus</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!editor.settings.readonly === <span class="literal">true</span>) &#123;</span><br><span class="line">                label.hide();</span><br><span class="line">            &#125;</span><br><span class="line">            editor.execCommand(<span class="string">'mceFocus'</span>, <span class="literal">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">onBlur</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (editor.getContent() == <span class="string">''</span>) &#123;</span><br><span class="line">                label.show();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                label.hide();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">onKeydown</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            label.hide();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> Label = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> placeholder_text = editor.getElement().getAttribute(<span class="string">"placeholder"</span>) || editor.settings.placeholder;</span><br><span class="line">        <span class="keyword">let</span> placeholder_attrs = editor.settings.placeholder_attrs || &#123;<span class="attr">style</span>: &#123;<span class="attr">position</span>: <span class="string">'absolute'</span>, <span class="attr">top</span>:<span class="string">'5px'</span>, <span class="attr">left</span>:<span class="number">0</span>, <span class="attr">color</span>: <span class="string">'#888'</span>, <span class="attr">padding</span>: <span class="string">'1%'</span>, <span class="attr">width</span>:<span class="string">'98%'</span>, <span class="attr">overflow</span>: <span class="string">'hidden'</span>, <span class="string">'white-space'</span>: <span class="string">'pre-wrap'</span>&#125; &#125;;</span><br><span class="line">        <span class="keyword">let</span> contentAreaContainer = editor.getContentAreaContainer();</span><br><span class="line"></span><br><span class="line">        tinymce.DOM.setStyle(contentAreaContainer, <span class="string">'position'</span>, <span class="string">'relative'</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Create label el</span></span><br><span class="line">        <span class="keyword">this</span>.el = tinymce.DOM.add( contentAreaContainer, editor.settings.placeholder_tag || <span class="string">"label"</span>, placeholder_attrs, placeholder_text );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Label.prototype.hide = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        tinymce.DOM.setStyle( <span class="keyword">this</span>.el, <span class="string">'display'</span>, <span class="string">'none'</span> );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Label.prototype.show = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        tinymce.DOM.setStyle( <span class="keyword">this</span>.el, <span class="string">'display'</span>, <span class="string">''</span> );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h5 id="1-2-引入该插件"><a href="#1-2-引入该插件" class="headerlink" title="1.2 .引入该插件"></a>1.2 .引入该插件</h5><p>在 tinymce.vue 组件中的 &lt;script&gt; 里引入：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">import</span> <span class="string">"tinymce/plugins/placeholder"</span><span class="string">;</span> <span class="string">//</span> <span class="string">默认提示文字插件</span></span><br></pre></td></tr></table></figure>
+
+<p>然后在 props 中的 plugins 里填入插件名称 <strong>placeholder</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">props: &#123;</span><br><span class="line">    plugins: &#123;</span><br><span class="line">      type: [<span class="built_in">String</span>, <span class="built_in">Array</span>],</span><br><span class="line">      <span class="keyword">default</span>: <span class="string">"placeholder"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h5 id="1-2-使用插件"><a href="#1-2-使用插件" class="headerlink" title="1.2 .使用插件"></a>1.2 .使用插件</h5><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"tinymce-box"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">editor</span></span></span><br><span class="line"><span class="tag">      <span class="attr">v-model</span>=<span class="string">"myValue"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">:init</span>=<span class="string">"init"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">placeholder</span>=<span class="string">"( 在 发 送 之 前 请 先 点 击 「保存」按 钮 )"</span></span></span><br><span class="line"><span class="tag">    &gt;</span><span class="tag">&lt;/<span class="name">editor</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>就可以看到刚开始的效果！</p>
+<p>感谢前辈解决方案</p>
+<blockquote>
+<p>引用链接：<a href="https://www.cnblogs.com/mailyuan/p/11394182.html" target="_blank" rel="noopener">https://www.cnblogs.com/mailyuan/p/11394182.html</a></p>
+</blockquote>
+<br>
+
+<h4 id="2-修改编辑框的样式"><a href="#2-修改编辑框的样式" class="headerlink" title="2.修改编辑框的样式"></a>2.修改编辑框的样式</h4><p>Tinymce 默认的编辑框样式为：</p>
+<p><img src="/2020/01/27/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/%E9%BB%98%E8%AE%A4.png" alt="默认框样式"></p>
+<br>
+
+<p>我们通过 <code>npm run dev</code> 在浏览器中F12 浏览是哪个类定义了这个框的样式</p>
+<p><img src="/2020/01/27/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/%E6%A0%B7%E5%BC%8F.png" alt="定义样式的类"></p>
+<p>这时候可以我们就可以在 static文件夹 中的 skins 中的 ui文件夹 里的皮肤下找到 skin.min.css 在里面修改自定义样式。</p>
+<p><img src="/2020/01/27/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/css%E4%BD%8D%E7%BD%AE.png" alt="样式位置"></p>
+<p><img src="/2020/01/27/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F.png" alt="自定义样式"></p>
+<br>
+
+<h4 id="3-为编辑框定义监听事件"><a href="#3-为编辑框定义监听事件" class="headerlink" title="3.为编辑框定义监听事件"></a>3.为编辑框定义监听事件</h4><p>因为我在做这个评论框的时候，后端的小伙伴要求发送评论前要先点<font color="orange">「保存」按钮</font> ，之后才能点<font color="orange">「发送」按钮</font> 。然后若是点击<font color="orange">「保存」按钮</font> 后，又对内容进行了更改，则需要再点击 <font color="orange">「保存」按钮</font> 。</p>
+<p>这时候就需要对编辑框进行事件监听，但是在使用一般的 <strong>change</strong> 事件时，发现在改变内容后，并不会触发事件。经过一番资料查找后发现，要使用 <strong>input</strong> 事件。</p>
+<p>下面记录一下三个事件 @input 、 @keyup.enter 、@change  的触发条件:</p>
+<h5 id="3-1-input事件"><a href="#3-1-input事件" class="headerlink" title="3.1 .@input事件"></a>3.1 .@input事件</h5><p>使用：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">editor</span></span></span><br><span class="line"><span class="tag">      <span class="attr">v-model</span>=<span class="string">"myValue"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">:init</span>=<span class="string">"init"</span></span></span><br><span class="line"><span class="tag">      @<span class="attr">input</span>=<span class="string">"isSend=true"</span></span></span><br><span class="line"><span class="tag">    &gt;</span><span class="tag">&lt;/<span class="name">editor</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>input事件 是实时监听的，每当输入一个字符都会触发该事件。</p>
+<br>
+
+<h5 id="3-2-keyup-enter事件"><a href="#3-2-keyup-enter事件" class="headerlink" title="3.2 .@keyup.enter事件"></a>3.2 <a href="mailto:.@keyup.enter">.@keyup.enter</a>事件</h5><p>使用：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">editor</span></span></span><br><span class="line"><span class="tag">      <span class="attr">v-model</span>=<span class="string">"myValue"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">:init</span>=<span class="string">"init"</span></span></span><br><span class="line"><span class="tag">      @<span class="attr">keyup.enter</span>=<span class="string">"isSend=true"</span></span></span><br><span class="line"><span class="tag">    &gt;</span><span class="tag">&lt;/<span class="name">editor</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>该事件只有在按下回车键（PC），或者 输入键盘右下角的确定键（手机），才会触发。</p>
+<br>
+
+<h5 id="3-3-change事件"><a href="#3-3-change事件" class="headerlink" title="3.3 .@change事件"></a>3.3 .@change事件</h5><p>使用：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">editor</span></span></span><br><span class="line"><span class="tag">      <span class="attr">v-model</span>=<span class="string">"myValue"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">:init</span>=<span class="string">"init"</span></span></span><br><span class="line"><span class="tag">      @<span class="attr">change</span>=<span class="string">"isSend=true"</span></span></span><br><span class="line"><span class="tag">    &gt;</span><span class="tag">&lt;/<span class="name">editor</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>输入框中的内容改变不会触发事件，只有当鼠标点击其他地方才会触发。</p>
+
+    </article>
+    <!-- license  -->
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/01/10/vue-cli%E4%BB%8B%E7%BB%8D/" title= "vue-cli介绍">
+                    <div class="prevTitle">vue-cli介绍</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <div id="comment"></div>
+    <script>
+    new Valine({
+        el: '#comment' ,
+        notify:false, 
+        verify:false, 
+        appId: "5a6GwXcbsb2EBWlIMCPPi8lf-gzGzoHsz",
+        appKey: "mfx2NaWgQ4QHpXsk2BT17uBy",
+        placeholder: "Let`s comment !",
+        path:window.location.pathname, 
+        avatar:'mm' 
+    });
+    </script>
+
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:617109354@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/CZQ-kyon" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/wechat.jpg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span> <span class="iconfont-archer power">&#xe635;</span><span id="theme-info">author <a href="https://github.com/CZQ-kyon" target="_blank">CZQ-kyon</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、在项目中安装-tinymce"><span class="toc-text">一、在项目中安装 tinymce</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-安装完成后，可以去官网安装语言包："><span class="toc-text">1.安装完成后，可以去官网安装语言包：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、tinymce-的使用"><span class="toc-text">二、tinymce 的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-封装-tinymce-组件"><span class="toc-text">1.封装 tinymce 组件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-组件引用"><span class="toc-text">2.组件引用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、对-Tinymce-进行自定义修改"><span class="toc-text">三、对 Tinymce 进行自定义修改</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-增加类似-placeholder-功能插件"><span class="toc-text">1.增加类似 placeholder 功能插件</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-1-增加-placeholder-插件"><span class="toc-text">1.1 .增加 placeholder 插件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-引入该插件"><span class="toc-text">1.2 .引入该插件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-使用插件"><span class="toc-text">1.2 .使用插件</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-修改编辑框的样式"><span class="toc-text">2.修改编辑框的样式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-为编辑框定义监听事件"><span class="toc-text">3.为编辑框定义监听事件</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-input事件"><span class="toc-text">3.1 .@input事件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2-keyup-enter事件"><span class="toc-text">3.2 .@keyup.enter事件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3-change事件"><span class="toc-text">3.3 .@change事件</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 7
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/27</span><a class="archive-post-title" href= "/2020/01/27/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/" >富文本编辑工具Tinymce入门使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2020/01/10/vue-cli%E4%BB%8B%E7%BB%8D/" >vue-cli介绍</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/nvm%E4%B8%8Enpm%E7%9A%84%E4%BB%8B%E7%BB%8D/" >nvm与npm的介绍</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/07</span><a class="archive-post-title" href= "/2020/01/07/%E3%81%AA%E3%81%84%E3%81%93%E3%81%A8%E3%81%AF%E3%81%AA%E3%81%84-%E3%81%AA%E3%81%84%E3%81%A7%E3%81%AF%E3%81%84%E3%82%89%E3%82%8C%E3%81%AA%E3%81%84/" >...ないことはない/...ないではいられない</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/06</span><a class="archive-post-title" href= "/2020/01/06/Nginx%E7%9A%84%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BD%BF%E7%94%A8/" >Nginx的简单配置和使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/05</span><a class="archive-post-title" href= "/2020/01/05/%E3%81%AE%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%84%E3%81%8B-%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%84%E3%81%8B%E7%9A%84%E5%8C%BA%E5%88%AB/" >のではないか  /  ではないか的区别</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/04</span><a class="archive-post-title" href= "/2020/01/04/VScode%E4%B8%AD%E4%BD%BF%E7%94%A8Github%E7%AE%A1%E7%90%86%E9%A1%B9%E7%9B%AE/" >VScode中使用Github管理项目</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="日本語"><span class="iconfont-archer">&#xe606;</span>日本語</span>
+    
+        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
+    
+        <span class="sidebar-tag-name" data-tags="web"><span class="iconfont-archer">&#xe606;</span>web</span>
+    
+        <span class="sidebar-tag-name" data-tags="Github"><span class="iconfont-archer">&#xe606;</span>Github</span>
+    
+        <span class="sidebar-tag-name" data-tags="nginx"><span class="iconfont-archer">&#xe606;</span>nginx</span>
+    
+        <span class="sidebar-tag-name" data-tags="Vue-cli"><span class="iconfont-archer">&#xe606;</span>Vue-cli</span>
+    
+        <span class="sidebar-tag-name" data-tags="Tinymce"><span class="iconfont-archer">&#xe606;</span>Tinymce</span>
+    
+        <span class="sidebar-tag-name" data-tags="Node.js"><span class="iconfont-archer">&#xe606;</span>Node.js</span>
+    
+        <span class="sidebar-tag-name" data-tags="nvm"><span class="iconfont-archer">&#xe606;</span>nvm</span>
+    
+        <span class="sidebar-tag-name" data-tags="npm"><span class="iconfont-archer">&#xe606;</span>npm</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="Study"><span class="iconfont-archer">&#xe60a;</span>Study</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "John Doe"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+
