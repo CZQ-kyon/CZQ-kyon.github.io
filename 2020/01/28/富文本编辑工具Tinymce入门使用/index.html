@@ -276,7 +276,7 @@ height:50vh;
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2020/01/27</span>
+                    <span class="post-intro-time">2020/01/28</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -410,7 +410,7 @@ height:50vh;
 <h4 id="1-安装完成后，可以去官网安装语言包："><a href="#1-安装完成后，可以去官网安装语言包：" class="headerlink" title="1.安装完成后，可以去官网安装语言包："></a>1.安装完成后，可以去官网安装语言包：</h4><blockquote>
 <p><a href="https://www.tiny.cloud/get-tiny/language-packages/" target="_blank" rel="noopener">https://www.tiny.cloud/get-tiny/language-packages/</a></p>
 </blockquote>
-<p>这里我们选择中文语言包。解压缩后在放到 vue 项目的 static 目录下：<br><img src="/2020/01/27/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/%E8%AF%AD%E8%A8%80%E5%8C%85.png" alt="语言包"></p>
+<p>这里我们选择中文语言包。解压缩后在放到 vue 项目的 static 目录下：<br><img src="/2020/01/28/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/%E8%AF%AD%E8%A8%80%E5%8C%85.png" alt="语言包"></p>
 <p>在 static 目录下新建一个 tinymce 的文件夹，将语言包放到文件夹中。<br>在 node_modules 文件中找到 tinymce ，将 skins 文件夹复制到 static 文件夹下，方便后面我们对编辑框的样式进行自定义修改。</p>
 <br>
 
@@ -433,9 +433,9 @@ height:50vh;
 <br>
 
 <h2 id="三、对-Tinymce-进行自定义修改"><a href="#三、对-Tinymce-进行自定义修改" class="headerlink" title="三、对 Tinymce 进行自定义修改"></a>三、对 Tinymce 进行自定义修改</h2><h4 id="1-增加类似-placeholder-功能插件"><a href="#1-增加类似-placeholder-功能插件" class="headerlink" title="1.增加类似 placeholder 功能插件"></a>1.增加类似 placeholder 功能插件</h4><p>为富文本编辑框中添加类似 input 中 placeholder 的功能，默认不点击时会出现文件，进行点击后文字消失，效果如下：  </p>
-<p><img src="/2020/01/27/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/placeholder.png" alt="placeholder功能"></p>
+<p><img src="/2020/01/28/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/placeholder.png" alt="placeholder功能"></p>
 <h5 id="1-1-增加-placeholder-插件"><a href="#1-1-增加-placeholder-插件" class="headerlink" title="1.1 .增加 placeholder 插件"></a>1.1 .增加 placeholder 插件</h5><p>在 <strong>node_modules</strong> 中的 <strong>tinymce</strong> 文件夹下的 <strong>plugins</strong> 里新建一个 <strong>placeholder</strong> 文件夹，里面新建一个 index.js：</p>
-<p><img src="/2020/01/27/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/plugins.png" alt="plugins"></p>
+<p><img src="/2020/01/28/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/plugins.png" alt="plugins"></p>
 <p>代码如下：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">tinymce.PluginManager.add(<span class="string">'placeholder'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">editor</span>) </span>&#123;</span><br><span class="line">    editor.on(<span class="string">'init'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> label = <span class="keyword">new</span> Label;</span><br><span class="line"></span><br><span class="line">        onBlur();</span><br><span class="line"></span><br><span class="line">        tinymce.DOM.bind(label.el, <span class="string">'click'</span>, onFocus);</span><br><span class="line">        editor.on(<span class="string">'focus'</span>, onFocus);</span><br><span class="line">        editor.on(<span class="string">'blur'</span>, onBlur);</span><br><span class="line">        editor.on(<span class="string">'change'</span>, onBlur);</span><br><span class="line">        editor.on(<span class="string">'setContent'</span>, onBlur);</span><br><span class="line">        editor.on(<span class="string">'keydown'</span>, onKeydown);</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">onFocus</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!editor.settings.readonly === <span class="literal">true</span>) &#123;</span><br><span class="line">                label.hide();</span><br><span class="line">            &#125;</span><br><span class="line">            editor.execCommand(<span class="string">'mceFocus'</span>, <span class="literal">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">onBlur</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (editor.getContent() == <span class="string">''</span>) &#123;</span><br><span class="line">                label.show();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                label.hide();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">onKeydown</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            label.hide();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> Label = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> placeholder_text = editor.getElement().getAttribute(<span class="string">"placeholder"</span>) || editor.settings.placeholder;</span><br><span class="line">        <span class="keyword">let</span> placeholder_attrs = editor.settings.placeholder_attrs || &#123;<span class="attr">style</span>: &#123;<span class="attr">position</span>: <span class="string">'absolute'</span>, <span class="attr">top</span>:<span class="string">'5px'</span>, <span class="attr">left</span>:<span class="number">0</span>, <span class="attr">color</span>: <span class="string">'#888'</span>, <span class="attr">padding</span>: <span class="string">'1%'</span>, <span class="attr">width</span>:<span class="string">'98%'</span>, <span class="attr">overflow</span>: <span class="string">'hidden'</span>, <span class="string">'white-space'</span>: <span class="string">'pre-wrap'</span>&#125; &#125;;</span><br><span class="line">        <span class="keyword">let</span> contentAreaContainer = editor.getContentAreaContainer();</span><br><span class="line"></span><br><span class="line">        tinymce.DOM.setStyle(contentAreaContainer, <span class="string">'position'</span>, <span class="string">'relative'</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Create label el</span></span><br><span class="line">        <span class="keyword">this</span>.el = tinymce.DOM.add( contentAreaContainer, editor.settings.placeholder_tag || <span class="string">"label"</span>, placeholder_attrs, placeholder_text );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Label.prototype.hide = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        tinymce.DOM.setStyle( <span class="keyword">this</span>.el, <span class="string">'display'</span>, <span class="string">'none'</span> );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Label.prototype.show = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        tinymce.DOM.setStyle( <span class="keyword">this</span>.el, <span class="string">'display'</span>, <span class="string">''</span> );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
@@ -458,14 +458,14 @@ height:50vh;
 <br>
 
 <h4 id="2-修改编辑框的样式"><a href="#2-修改编辑框的样式" class="headerlink" title="2.修改编辑框的样式"></a>2.修改编辑框的样式</h4><p>Tinymce 默认的编辑框样式为：</p>
-<p><img src="/2020/01/27/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/%E9%BB%98%E8%AE%A4.png" alt="默认框样式"></p>
+<p><img src="/2020/01/28/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/%E9%BB%98%E8%AE%A4.png" alt="默认框样式"></p>
 <br>
 
 <p>我们通过 <code>npm run dev</code> 在浏览器中F12 浏览是哪个类定义了这个框的样式</p>
-<p><img src="/2020/01/27/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/%E6%A0%B7%E5%BC%8F.png" alt="定义样式的类"></p>
+<p><img src="/2020/01/28/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/%E6%A0%B7%E5%BC%8F.png" alt="定义样式的类"></p>
 <p>这时候可以我们就可以在 static文件夹 中的 skins 中的 ui文件夹 里的皮肤下找到 skin.min.css 在里面修改自定义样式。</p>
-<p><img src="/2020/01/27/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/css%E4%BD%8D%E7%BD%AE.png" alt="样式位置"></p>
-<p><img src="/2020/01/27/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F.png" alt="自定义样式"></p>
+<p><img src="/2020/01/28/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/css%E4%BD%8D%E7%BD%AE.png" alt="样式位置"></p>
+<p><img src="/2020/01/28/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F.png" alt="自定义样式"></p>
 <br>
 
 <h4 id="3-为编辑框定义监听事件"><a href="#3-为编辑框定义监听事件" class="headerlink" title="3.为编辑框定义监听事件"></a>3.为编辑框定义监听事件</h4><p>因为我在做这个评论框的时候，后端的小伙伴要求发送评论前要先点<font color="orange">「保存」按钮</font> ，之后才能点<font color="orange">「发送」按钮</font> 。然后若是点击<font color="orange">「保存」按钮</font> 后，又对内容进行了更改，则需要再点击 <font color="orange">「保存」按钮</font> 。</p>
@@ -476,7 +476,7 @@ height:50vh;
 <p>input事件 是实时监听的，每当输入一个字符都会触发该事件。</p>
 <br>
 
-<h5 id="3-2-keyup-enter事件"><a href="#3-2-keyup-enter事件" class="headerlink" title="3.2 .@keyup.enter事件"></a>3.2 <a href="mailto:.@keyup.enter">.@keyup.enter</a>事件</h5><p>使用：</p>
+<h5 id="3-2-keyup-enter事件"><a href="#3-2-keyup-enter事件" class="headerlink" title="3.2 . @keyup.enter事件"></a>3.2 . @keyup.enter事件</h5><p>使用：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">editor</span></span></span><br><span class="line"><span class="tag">      <span class="attr">v-model</span>=<span class="string">"myValue"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">:init</span>=<span class="string">"init"</span></span></span><br><span class="line"><span class="tag">      @<span class="attr">keyup.enter</span>=<span class="string">"isSend=true"</span></span></span><br><span class="line"><span class="tag">    &gt;</span><span class="tag">&lt;/<span class="name">editor</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>该事件只有在按下回车键（PC），或者 输入键盘右下角的确定键（手机），才会触发。</p>
 <br>
@@ -632,7 +632,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、在项目中安装-tinymce"><span class="toc-text">一、在项目中安装 tinymce</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-安装完成后，可以去官网安装语言包："><span class="toc-text">1.安装完成后，可以去官网安装语言包：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、tinymce-的使用"><span class="toc-text">二、tinymce 的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-封装-tinymce-组件"><span class="toc-text">1.封装 tinymce 组件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-组件引用"><span class="toc-text">2.组件引用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、对-Tinymce-进行自定义修改"><span class="toc-text">三、对 Tinymce 进行自定义修改</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-增加类似-placeholder-功能插件"><span class="toc-text">1.增加类似 placeholder 功能插件</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-1-增加-placeholder-插件"><span class="toc-text">1.1 .增加 placeholder 插件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-引入该插件"><span class="toc-text">1.2 .引入该插件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-使用插件"><span class="toc-text">1.2 .使用插件</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-修改编辑框的样式"><span class="toc-text">2.修改编辑框的样式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-为编辑框定义监听事件"><span class="toc-text">3.为编辑框定义监听事件</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-input事件"><span class="toc-text">3.1 .@input事件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2-keyup-enter事件"><span class="toc-text">3.2 .@keyup.enter事件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3-change事件"><span class="toc-text">3.3 .@change事件</span></a></li></ol></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、在项目中安装-tinymce"><span class="toc-text">一、在项目中安装 tinymce</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-安装完成后，可以去官网安装语言包："><span class="toc-text">1.安装完成后，可以去官网安装语言包：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、tinymce-的使用"><span class="toc-text">二、tinymce 的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-封装-tinymce-组件"><span class="toc-text">1.封装 tinymce 组件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-组件引用"><span class="toc-text">2.组件引用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、对-Tinymce-进行自定义修改"><span class="toc-text">三、对 Tinymce 进行自定义修改</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-增加类似-placeholder-功能插件"><span class="toc-text">1.增加类似 placeholder 功能插件</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-1-增加-placeholder-插件"><span class="toc-text">1.1 .增加 placeholder 插件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-引入该插件"><span class="toc-text">1.2 .引入该插件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-使用插件"><span class="toc-text">1.2 .使用插件</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-修改编辑框的样式"><span class="toc-text">2.修改编辑框的样式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-为编辑框定义监听事件"><span class="toc-text">3.为编辑框定义监听事件</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-input事件"><span class="toc-text">3.1 .@input事件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2-keyup-enter事件"><span class="toc-text">3.2 . @keyup.enter事件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3-change事件"><span class="toc-text">3.3 .@change事件</span></a></li></ol></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -742,7 +742,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/27</span><a class="archive-post-title" href= "/2020/01/27/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/" >富文本编辑工具Tinymce入门使用</a>
+            <span class="archive-post-date">01/28</span><a class="archive-post-title" href= "/2020/01/28/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/" >富文本编辑工具Tinymce入门使用</a>
         </li>
     
     
@@ -780,25 +780,25 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="日本語"><span class="iconfont-archer">&#xe606;</span>日本語</span>
-    
         <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
     
         <span class="sidebar-tag-name" data-tags="web"><span class="iconfont-archer">&#xe606;</span>web</span>
     
         <span class="sidebar-tag-name" data-tags="Github"><span class="iconfont-archer">&#xe606;</span>Github</span>
     
-        <span class="sidebar-tag-name" data-tags="nginx"><span class="iconfont-archer">&#xe606;</span>nginx</span>
-    
-        <span class="sidebar-tag-name" data-tags="Vue-cli"><span class="iconfont-archer">&#xe606;</span>Vue-cli</span>
-    
-        <span class="sidebar-tag-name" data-tags="Tinymce"><span class="iconfont-archer">&#xe606;</span>Tinymce</span>
-    
         <span class="sidebar-tag-name" data-tags="Node.js"><span class="iconfont-archer">&#xe606;</span>Node.js</span>
     
         <span class="sidebar-tag-name" data-tags="nvm"><span class="iconfont-archer">&#xe606;</span>nvm</span>
     
         <span class="sidebar-tag-name" data-tags="npm"><span class="iconfont-archer">&#xe606;</span>npm</span>
+    
+        <span class="sidebar-tag-name" data-tags="日本語"><span class="iconfont-archer">&#xe606;</span>日本語</span>
+    
+        <span class="sidebar-tag-name" data-tags="nginx"><span class="iconfont-archer">&#xe606;</span>nginx</span>
+    
+        <span class="sidebar-tag-name" data-tags="Vue-cli"><span class="iconfont-archer">&#xe606;</span>Vue-cli</span>
+    
+        <span class="sidebar-tag-name" data-tags="Tinymce"><span class="iconfont-archer">&#xe606;</span>Tinymce</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
