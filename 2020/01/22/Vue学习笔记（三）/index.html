@@ -427,28 +427,40 @@ height:50vh;
 
 <h3 id="3-钩子函数"><a href="#3-钩子函数" class="headerlink" title="3.钩子函数"></a>3.钩子函数</h3><p>一个指令定义对象可以提供如下几个钩子函数：</p>
 <ul>
-<li><font color="red">bind : </font>只调用一次，指令第一次绑定到元素时调用，在这里可以进行一次性的初始化设置。<br></li>
-<li><font color="red">inserted : </font>被绑定元素插入父节点时调用（仅保证父节点存在，但不一定已被插入文档中）。<br></li>
-<li><font color="red">updated : </font>组件 DOM 更新时调用，当这个钩子被调用时，DOM 已经完成更新，但是不会保证全部子组件也更新完成。<br></li>
-<li><font color="red">componentUpdated : </font>指令所在组件及其子组件全部更新后调用。<br></li>
+<li><font color="red">bind : </font>只调用一次，指令第一次绑定到元素时调用，在这里可以进行一次性的初始化设置。</li>
+</ul>
+<ul>
+<li><font color="red">inserted : </font>被绑定元素插入父节点时调用（仅保证父节点存在，但不一定已被插入文档中）。</li>
+</ul>
+<ul>
+<li><font color="red">updated : </font>组件 DOM 更新时调用，当这个钩子被调用时，DOM 已经完成更新，但是不会保证全部子组件也更新完成。</li>
+</ul>
+<ul>
+<li><font color="red">componentUpdated : </font>指令所在组件及其子组件全部更新后调用。</li>
+</ul>
+<ul>
 <li><font color="red">unbind : </font>只调用一次，指令与元素解绑时调用。</li>
 </ul>
 <br>
 
 <h3 id="4-钩子函数参数"><a href="#4-钩子函数参数" class="headerlink" title="4.钩子函数参数"></a>4.钩子函数参数</h3><p>指令钩子函数会被传入一下参数：</p>
 <ul>
-<li><font color="red">el : </font>指令所绑定的元素，可以用来直接操作 DOM。<br></li>
-<li><font color="red">binding : </font>一个对象，包含以下属性：</li>
+<li><p><font color="red">el : </font>指令所绑定的元素，可以用来直接操作 DOM。</p>
+</li>
+<li><p><font color="red">binding : </font>一个对象，包含以下属性：</p>
+</li>
 </ul>
 <p>&emsp;&emsp; * name :指令名，不包括 <code>v-</code>前缀。</p>
 <p>&emsp;&emsp; * value :指令的绑定值，例如：<code>v-my-directive=&quot;1+1&quot;</code> 中，绑定值为2。</p>
 <p>&emsp;&emsp; * oldValue :指令绑定的前一个值，仅在<font color="red">updated</font> 和<font color="red">componentUpdated</font> 钩子中可用，无论值是否改变都可用。</p>
 <p>&emsp;&emsp; * expression :字符串形式的指令表达式，例如：<code>v-my-directive=&quot;1+1&quot;</code> 中，表达式为 <code>&quot;1+1&quot;</code>。</p>
 <p>&emsp;&emsp; * arg :传给指令的参数，可选。例如： <code>v-my-directive:foo</code> 中，参数为 <code>foo</code>。</p>
-<p>&emsp;&emsp; * modifiers :一个包含修饰符的对象。例如：<code>v-my-directive.foo.bar</code> 中，修饰符对象为 <code>{foo:true,bar:true}</code>。<br><br></p>
+<p>&emsp;&emsp; * modifiers :一个包含修饰符的对象。例如：<code>v-my-directive.foo.bar</code> 中，修饰符对象为 <code>{foo:true,bar:true}</code>。</p>
 <ul>
-<li><font color="red">vnode :</font> Vue 编译生成的虚拟节点。<br></li>
-<li><font color="red">oldVnode :</font> 上一个虚拟节点，仅在<font color="red">updated</font> 和<font color="red">componentUpdated</font> 钩子中可用。</li>
+<li><p><font color="red">vnode :</font> Vue 编译生成的虚拟节点。</p>
+</li>
+<li><p><font color="red">oldVnode :</font> 上一个虚拟节点，仅在<font color="red">updated</font> 和<font color="red">componentUpdated</font> 钩子中可用。</p>
+</li>
 </ul>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">v-color</span>=<span class="string">"blue"</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -601,8 +613,8 @@ height:50vh;
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href= "/2020/01/28/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/" title= "富文本编辑工具Tinymce入门使用">
-                    <div class="nextTitle">富文本编辑工具Tinymce入门使用</div>
+                <a href= "/2020/01/23/Vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/" title= "Vue学习笔记（四）">
+                    <div class="nextTitle">Vue学习笔记（四）</div>
                 </a>
             
         </li>
@@ -881,14 +893,9 @@ top:50vh;
     
     
     
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 10
+        Total : 11
         </div>
         <!-- search  -->
         
@@ -905,6 +912,11 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">01/28</span><a class="archive-post-title" href= "/2020/01/28/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/" >富文本编辑工具Tinymce入门使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/23</span><a class="archive-post-title" href= "/2020/01/23/Vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/" >Vue学习笔记（四）</a>
         </li>
     
     
@@ -957,17 +969,15 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="Vue"><span class="iconfont-archer">&#xe606;</span>Vue</span>
+    
+        <span class="sidebar-tag-name" data-tags="整理归档"><span class="iconfont-archer">&#xe606;</span>整理归档</span>
+    
         <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
     
         <span class="sidebar-tag-name" data-tags="web"><span class="iconfont-archer">&#xe606;</span>web</span>
     
         <span class="sidebar-tag-name" data-tags="Github"><span class="iconfont-archer">&#xe606;</span>Github</span>
-    
-        <span class="sidebar-tag-name" data-tags="Vue"><span class="iconfont-archer">&#xe606;</span>Vue</span>
-    
-        <span class="sidebar-tag-name" data-tags="整理归档"><span class="iconfont-archer">&#xe606;</span>整理归档</span>
-    
-        <span class="sidebar-tag-name" data-tags="日本語"><span class="iconfont-archer">&#xe606;</span>日本語</span>
     
         <span class="sidebar-tag-name" data-tags="Node.js"><span class="iconfont-archer">&#xe606;</span>Node.js</span>
     
@@ -975,11 +985,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="npm"><span class="iconfont-archer">&#xe606;</span>npm</span>
     
+        <span class="sidebar-tag-name" data-tags="日本語"><span class="iconfont-archer">&#xe606;</span>日本語</span>
+    
         <span class="sidebar-tag-name" data-tags="nginx"><span class="iconfont-archer">&#xe606;</span>nginx</span>
     
-        <span class="sidebar-tag-name" data-tags="Tinymce"><span class="iconfont-archer">&#xe606;</span>Tinymce</span>
-    
         <span class="sidebar-tag-name" data-tags="Vue-cli"><span class="iconfont-archer">&#xe606;</span>Vue-cli</span>
+    
+        <span class="sidebar-tag-name" data-tags="Tinymce"><span class="iconfont-archer">&#xe606;</span>Tinymce</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
