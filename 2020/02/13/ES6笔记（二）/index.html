@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="John Doe">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="John Doe">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>ES6笔记（二） · CZQ-kyon&#39;s Blog</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >CZQ-kyon&#39;s Blog.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">ES6笔记（二）</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>CZQ-kyon's Blog.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            ES6笔记（二）
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ES6">ES6</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "整理归档">整理归档</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">1.9k</span>Reading time: <span class="post-count reading-time">8 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/02/13</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>该笔记中的代码片段都可以在浏览器中的控制台中运行 F12 ，直接看到执行结果，可以自己尝试。</p>
+<p>本篇包括：</p>
+<ul>
+<li>六、数组</li>
+<li>七、箭头函数和扩展</li>
+<li>八、ES6 中的对象</li>
+<li>九、Symbol 在对象中的作用</li>
+</ul>
+<hr>
+<br>
+
+<h2 id="六、数组"><a href="#六、数组" class="headerlink" title="六、数组"></a>六、数组</h2><h3 id="1、JSON数组格式转换-Array-from（xxx）"><a href="#1、JSON数组格式转换-Array-from（xxx）" class="headerlink" title="1、JSON数组格式转换 Array.from（xxx）"></a>1、JSON数组格式转换 Array.from（xxx）</h3><p>把JSON转换成数组的格式</p>
+<p>JSON数组格式：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let json = &#123;</span><br><span class="line">    '0':'czq',</span><br><span class="line">    '1':'yamada',</span><br><span class="line">    '2':'yuui',</span><br><span class="line">    length:3</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>跟普通的JSON对比是在最后多了一个length属性，只要是这种json格式，可以使用ES6的语法转变成数组。</p>
+<p>ES6 中绝大部分的 Array操作 都存在 Array对象 里，使用 <code>Array.from（xxx）</code> 来进行转换。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> json = &#123;</span><br><span class="line">    <span class="string">'0'</span>:<span class="string">'czq'</span>,</span><br><span class="line">    <span class="string">'1'</span>:<span class="string">'yamada'</span>,</span><br><span class="line">    <span class="string">'2'</span>:<span class="string">'yuui'</span>,</span><br><span class="line">    length:<span class="number">3</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> arr = <span class="built_in">Array</span>.from(json);</span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">//['czq','yamada','yuui']</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="2、Array-of（）"><a href="#2、Array-of（）" class="headerlink" title="2、Array.of（）"></a>2、Array.of（）</h3><p>把一堆文本或者变量转换成数组</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr =<span class="built_in">Array</span>.of(<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>);</span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">//[3,4,5,6]</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr =<span class="built_in">Array</span>.of(<span class="string">'czq'</span>,<span class="string">'yamada'</span>,<span class="string">'yuui'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">//['czq','yamada','yuui']</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="3、find（）"><a href="#3、find（）" class="headerlink" title="3、find（）"></a>3、find（）</h3><p>实例方法（必须要有一个已经存在的数组，然后使用的方法）</p>
+<p>从数组中查找，在find方法中我们需要传入一个匿名函数，该匿名函数需要传入三个参数：</p>
+<ul>
+<li><p><strong>value：表示当前查找的值。</strong></p>
+</li>
+<li><p><strong>index：表示当前查找的数组索引。</strong></p>
+</li>
+<li><p><strong>arr：表示当前数组。</strong></p>
+</li>
+</ul>
+<p>在函数中如果找到符合条件的数组元素就进行 return ，并停止查找。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>];</span><br><span class="line"><span class="built_in">console</span>.log(arr.find(<span class="function"><span class="keyword">function</span>(<span class="params">value,index,arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> value &gt; <span class="number">5</span>;</span><br><span class="line">&#125;)); <span class="comment">//6</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="4、fill（）"><a href="#4、fill（）" class="headerlink" title="4、fill（）"></a>4、fill（）</h3><p>实例方法</p>
+<p>对数组进行填充，接收三个参数:</p>
+<ul>
+<li><p><strong>第一个参数</strong>：填充的变量;</p>
+</li>
+<li><p><strong>第二个参数</strong>：开始填充的位置(数组下标从0开始);</p>
+</li>
+<li><p><strong>第三个参数</strong>：填充到的位置（包头不包尾）</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr=[<span class="string">'czq'</span>,<span class="string">'yamada'</span>,<span class="string">'yuui'</span>];</span><br><span class="line">arr.fill(<span class="string">'kyon'</span>,<span class="number">1</span>,<span class="number">2</span>); </span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">//['czq','kyon','yuui']</span></span><br></pre></td></tr></table></figure>
+
+<p>把数组从第二位用 kyon 进行填充。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr=[<span class="string">'czq'</span>,<span class="string">'yamada'</span>,<span class="string">'yuui'</span>];</span><br><span class="line">arr.fill(<span class="string">'love'</span>,<span class="number">1</span>,<span class="number">3</span>); </span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">//['czq','love','love']</span></span><br></pre></td></tr></table></figure>
+
+<p>把数组第二位到第三位用 love 进行填充。</p>
+<br>
+
+<h3 id="5、数组的遍历-for-…-of-循环"><a href="#5、数组的遍历-for-…-of-循环" class="headerlink" title="5、数组的遍历 for … of 循环"></a>5、数组的遍历 for … of 循环</h3><p>比ES5的for循环要简单而且高效</p>
+<p>for … of 输出数组：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr=[<span class="string">'czq'</span>,<span class="string">'yamada'</span>,<span class="string">'yuui'</span>]</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> arr)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(item);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>for … of 数组索引：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr=[<span class="string">'czq'</span>,<span class="string">'yamada'</span>,<span class="string">'yuui'</span>]</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> index <span class="keyword">of</span> arr.keys())&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(index); <span class="comment">// 0,1,2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>for … of 输出数组的内容和索引：</p>
+<p>用 <code>entries（）</code> 这个实例方法，配合 <code>for ... of</code> 循环就可以同时输出内容和索引。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr=[<span class="string">'czq'</span>,<span class="string">'yamada'</span>,<span class="string">'yuui'</span>]</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> [index,val] <span class="keyword">of</span> arr.entries())&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(index + <span class="string">':'</span> + val);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="6、entries（）实例方法"><a href="#6、entries（）实例方法" class="headerlink" title="6、entries（）实例方法"></a>6、entries（）实例方法</h3><p>生成 Iterator 形式的数组 ，这种形式可以在需要时用 next（）手动跳转到下一个值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr=[<span class="string">'czq'</span>,<span class="string">'yamada'</span>,<span class="string">'yuui'</span>]</span><br><span class="line"><span class="keyword">let</span> list=arr.entries();</span><br><span class="line"><span class="built_in">console</span>.log(list.next().value);</span><br><span class="line"><span class="built_in">console</span>.log(list.next().value);</span><br><span class="line"><span class="built_in">console</span>.log(list.next().value);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="七、箭头函数和扩展"><a href="#七、箭头函数和扩展" class="headerlink" title="七、箭头函数和扩展"></a>七、箭头函数和扩展</h2><h3 id="1、默认值"><a href="#1、默认值" class="headerlink" title="1、默认值"></a>1、默认值</h3><p>ES6 中增加了默认值的操作</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a,b=<span class="number">1</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(add(<span class="number">1</span>)); <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="2、主动抛出错误"><a href="#2、主动抛出错误" class="headerlink" title="2、主动抛出错误"></a>2、主动抛出错误</h3><p>使用 Vue 框架中，有时可以看到框架主动抛出一些错误，如 v-for 必须有 <code>:key</code><br>ES6 中直接用 <code>throw new Error（ xxxx ）</code>，就可以抛出错误</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a,b=<span class="number">1</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(a==<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'This is error'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(add(<span class="number">0</span>)); <span class="comment">// This is error</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="3、严谨模式"><a href="#3、严谨模式" class="headerlink" title="3、严谨模式"></a>3、严谨模式</h3><p>在ES中可以使用严谨模式来进行编程，但是必须写在代码最上边，相当于全局使用，在 ES6 中可以写在函数体中，相当于针对函数来使用.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a,b=<span class="number">1</span></span>)</span>&#123;</span><br><span class="line"><span class="meta">    'use strict'</span></span><br><span class="line">    <span class="keyword">if</span>(a == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'This is error'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(add(<span class="number">1</span>));</span><br></pre></td></tr></table></figure>
+
+<p><font color="orange">该代码会报错，如果使用了默认值，再使用严谨模式，就会有冲突，取消默认值，就运行正常。</font></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line"><span class="meta">    'use strict'</span></span><br><span class="line">    <span class="keyword">if</span>(a == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'This is error'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(add(<span class="number">1</span>,<span class="number">10</span>));</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="4、获得需要传递的参数个数"><a href="#4、获得需要传递的参数个数" class="headerlink" title="4、获得需要传递的参数个数"></a>4、获得需要传递的参数个数</h3><p>使用 （函数名）xxx.length 可以得到函数需要传递的参数的个数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line"><span class="meta">    'use strict'</span></span><br><span class="line">    <span class="keyword">if</span>(a == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'This is error'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(add.length); <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+<p>如果去掉严谨模式，并给参数 b 加上默认值的话，这时，add.length 的值就变成了1，也就是，<font color="orange">xxx.length 得到的是必须传入的参数</font></p>
+<br>
+
+<h3 id="5、箭头函数"><a href="#5、箭头函数" class="headerlink" title="5、箭头函数"></a>5、箭头函数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> add = <span class="function">(<span class="params">a,b=<span class="number">1</span></span>) =&gt;</span> a+b;</span><br><span class="line"><span class="built_in">console</span>.log(add(<span class="number">1</span>)); <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+<p>若方法体内是两句话，就需要在方法体外加上 {} 括号</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> add = <span class="function">(<span class="params">a,b=<span class="number">1</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'love'</span>);</span><br><span class="line">    <span class="keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(add(<span class="number">1</span>));</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="6、对象的函数解构"><a href="#6、对象的函数解构" class="headerlink" title="6、对象的函数解构"></a>6、对象的函数解构</h3><p>把 JSON 格式数据当作参数，传递到函数内部进行处理</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> json = &#123;</span><br><span class="line">    a:<span class="string">'yamada'</span>,</span><br><span class="line">    b:<span class="string">'yuui'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fun</span>(<span class="params">&#123;a,b=<span class="string">'czq'</span>&#125;</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(a,b);</span><br><span class="line">&#125;</span><br><span class="line">fun(json); <span class="comment">// yamada yuui</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="7、数组的函数解构"><a href="#7、数组的函数解构" class="headerlink" title="7、数组的函数解构"></a>7、数组的函数解构</h3><p>用 <code>...</code> 进行解构赋值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">'czq'</span>,<span class="string">'yamada'</span>,<span class="string">'yuui'</span>];</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fun</span>(<span class="params">a,b,c</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(a,b,c);</span><br><span class="line">&#125;</span><br><span class="line">fun(...arr); <span class="comment">// czq yamada yuui</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="8、in-的用法"><a href="#8、in-的用法" class="headerlink" title="8、in 的用法"></a>8、in 的用法</h3><p>用来判断对象或者数组中是否存在某个值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">    a:<span class="string">'yamada'</span>,</span><br><span class="line">    b:<span class="string">'yuui'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'a'</span> <span class="keyword">in</span> obj); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [,<span class="string">'czq'</span>,,];</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">0</span> <span class="keyword">in</span> arr); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span> <span class="keyword">in</span> arr); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> arr1 = [<span class="string">'yamada'</span>,<span class="string">'yuui'</span>];</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">0</span> <span class="keyword">in</span> arr1); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p><font color="orange">注意：这里的0指的是数组下标位置是否为空</font></p>
+<br>
+
+<h3 id="9、数组的遍历方法"><a href="#9、数组的遍历方法" class="headerlink" title="9、数组的遍历方法"></a>9、数组的遍历方法</h3><h4 id="9-1-、forEach"><a href="#9-1-、forEach" class="headerlink" title="9.1 、forEach"></a>9.1 、forEach</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">'czq'</span>,<span class="string">'yamada'</span>,<span class="string">'yuui'</span>]</span><br><span class="line">arr.forEach(<span class="function">(<span class="params">val,index</span>)=&gt;</span><span class="built_in">console</span>.log(index,val));</span><br></pre></td></tr></table></figure>
+
+<p><font color="orange">forEach 循环的特点是会自动省略为空的数组元素。</font></p>
+<br>
+
+<h4 id="9-2-、filter"><a href="#9-2-、filter" class="headerlink" title="9.2 、filter"></a>9.2 、filter</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">'czq'</span>,<span class="string">'yamada'</span>,<span class="string">'yuui'</span>]</span><br><span class="line">arr.filter( <span class="function"><span class="params">x</span>=&gt;</span><span class="built_in">console</span>.log(x) );<span class="comment">// czq yamada yuui</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="9-3-、some"><a href="#9-3-、some" class="headerlink" title="9.3 、some"></a>9.3 、some</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">'czq'</span>,<span class="string">'yamada'</span>,<span class="string">'yuui'</span>]</span><br><span class="line">arr.some( <span class="function"><span class="params">x</span>=&gt;</span><span class="built_in">console</span>.log(x) );<span class="comment">// czq yamada yuui</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="9-4-、map"><a href="#9-4-、map" class="headerlink" title="9.4 、map"></a>9.4 、map</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">'czq'</span>,<span class="string">'yamada'</span>,<span class="string">'yuui'</span>]</span><br><span class="line"><span class="built_in">console</span>.log(arr.map(<span class="function"><span class="params">x</span>=&gt;</span><span class="built_in">console</span>.log(x))) <span class="comment">// czq yamada yuui</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="10、join（）方法"><a href="#10、join（）方法" class="headerlink" title="10、join（）方法"></a>10、join（）方法</h3><p>在数组元素中间，加一些间隔</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">'czq'</span>,<span class="string">'yamada'</span>,<span class="string">'yuui'</span>]</span><br><span class="line"><span class="built_in">console</span>.log(arr.join(<span class="string">' | '</span>)); <span class="comment">// czq | yamada | yuui</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="11、toString（）方法"><a href="#11、toString（）方法" class="headerlink" title="11、toString（）方法"></a>11、toString（）方法</h3><p>转换时只是用逗号隔开了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">'czq'</span>,<span class="string">'yamada'</span>,<span class="string">'yuui'</span>]</span><br><span class="line"><span class="built_in">console</span>.log(arr.toString());</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="八、ES6-中的对象"><a href="#八、ES6-中的对象" class="headerlink" title="八、ES6 中的对象"></a>八、ES6 中的对象</h2><h3 id="1、ES6-允许把声明的变量直接赋值给对象"><a href="#1、ES6-允许把声明的变量直接赋值给对象" class="headerlink" title="1、ES6 允许把声明的变量直接赋值给对象"></a>1、ES6 允许把声明的变量直接赋值给对象</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> name = <span class="string">'czq'</span>;</span><br><span class="line"><span class="keyword">let</span> skill = <span class="string">'web'</span>;</span><br><span class="line"><span class="keyword">var</span> obj = &#123;name,skill&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(obj);<span class="comment">// Object &#123;name:"czq",skill:"web"&#125;</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="2、对象Key值构建"><a href="#2、对象Key值构建" class="headerlink" title="2、对象Key值构建"></a>2、对象Key值构建</h3><p>用 <code>[]</code> 的形式，进行对象 Key 值构建</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> name = <span class="string">'czq'</span>;</span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    [name]:<span class="string">'111'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(obj.czq); <span class="comment">// 111</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="3、自定义对象方法"><a href="#3、自定义对象方法" class="headerlink" title="3、自定义对象方法"></a>3、自定义对象方法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    add:<span class="function"><span class="keyword">function</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> a+b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(obj.add(<span class="number">1</span>,<span class="number">2</span>)); <span class="comment">//3</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="4、Object-is-对象比较"><a href="#4、Object-is-对象比较" class="headerlink" title="4、Object.is 对象比较"></a>4、Object.is 对象比较</h3><p>以前对象值的比较，使用 <code>===</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj1 = &#123;<span class="attr">name</span>:<span class="string">'czq'</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> obj2 = &#123;<span class="attr">name</span>:<span class="string">'czq'</span>&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(obj1.name === obj2.name); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+
+<p>ES6 提供了 is 方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj1 = &#123;<span class="attr">name</span>:<span class="string">'czq'</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> obj2 = &#123;<span class="attr">name</span>:<span class="string">'czq'</span>&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(obj1.name === obj2.name); <span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.is(obj1.name,obj2.name)); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+
+<p><code>===</code> 与 <code>is</code> 的区别：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(+<span class="number">0</span> === <span class="number">-0</span>); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="literal">NaN</span> === <span class="literal">NaN</span>); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.is(+<span class="number">0</span>,<span class="number">-0</span>)); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.is(<span class="literal">NaN</span>,<span class="literal">NaN</span>)); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p><font color="orange"> <code>===</code> 为 同值相等，<code>is（）</code> 为 严格相等</font></p>
+<br>
+
+<h3 id="5、Object-assign（）合并对象"><a href="#5、Object-assign（）合并对象" class="headerlink" title="5、Object.assign（）合并对象"></a>5、Object.assign（）合并对象</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a=&#123;<span class="attr">a</span>:<span class="string">'czq'</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> b=&#123;<span class="attr">b</span>:<span class="string">'yamada'</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> c=&#123;<span class="attr">c</span>:<span class="string">'yuui'</span>&#125;;</span><br><span class="line"><span class="keyword">let</span> d = <span class="built_in">Object</span>.assign(a,b,c);</span><br><span class="line"><span class="built_in">console</span>.log(d);<span class="comment">//["czq","yamada","yuui"]</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="九、Symbol-在对象中的作用"><a href="#九、Symbol-在对象中的作用" class="headerlink" title="九、Symbol 在对象中的作用"></a>九、Symbol 在对象中的作用</h2><p>Symbol：全局标记</p>
+<h3 id="1、声明Symbol"><a href="#1、声明Symbol" class="headerlink" title="1、声明Symbol"></a>1、声明Symbol</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> f = <span class="built_in">Symbol</span>();</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> g = <span class="built_in">Symbol</span>(<span class="string">'czq'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(g); <span class="comment">//显示红字的 Symbol(czq)</span></span><br><span class="line"><span class="built_in">console</span>.log(g.toString()); <span class="comment">//显示黑字的 Symbol(czq)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/02/13/ES6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/symbol.png" alt="Symbol"></p>
+<br>
+
+<h3 id="2、Symbol在对象中的引用"><a href="#2、Symbol在对象中的引用" class="headerlink" title="2、Symbol在对象中的引用"></a>2、Symbol在对象中的引用</h3><p>用 Symbol 构建对象的 Key ，并调用和赋值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="built_in">Symbol</span>();</span><br><span class="line"><span class="keyword">var</span> obj=&#123;</span><br><span class="line">    [name]:<span class="string">'czq'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(obj[name]); <span class="comment">//czq</span></span><br><span class="line">obj[name]=<span class="string">'yamada'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(obj[name]); <span class="comment">//yamada</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="3、Symbol对象元素的保护作用"><a href="#3、Symbol对象元素的保护作用" class="headerlink" title="3、Symbol对象元素的保护作用"></a>3、Symbol对象元素的保护作用</h3><p>在对象中很多值，但是循环输出时，并不希望全部输出，这时可以使用 Symbol 进行保护</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//没有进行保护的写法</span></span><br><span class="line"><span class="keyword">var</span> obj=&#123;<span class="attr">name</span>:<span class="string">'czq'</span>,<span class="attr">skill</span>:<span class="string">'web'</span>,<span class="attr">age</span>:<span class="number">18</span>&#125;;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> item <span class="keyword">in</span> obj)&#123;</span><br><span class="line">    conosle.log(obj[item]); <span class="comment">//czq web 18</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用保护写法 不输出 age</span></span><br><span class="line"><span class="keyword">let</span> obj=&#123;<span class="attr">name</span>:<span class="string">'czq'</span>,<span class="attr">skill</span>:<span class="string">'web'</span>&#125;;</span><br><span class="line"><span class="keyword">let</span> age = <span class="built_in">Symbol</span>();</span><br><span class="line">obj[age]=<span class="number">18</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> item <span class="keyword">in</span> obj)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(obj[item]); <span class="comment">// czq web</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(obj); <span class="comment">// Object &#123;name:"czq",skill:"web",Symbol():18&#125;</span></span><br></pre></td></tr></table></figure>
+
+    </article>
+    <!-- license  -->
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2020/02/13/ES6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/" title= "ES6笔记（三）">
+                    <div class="nextTitle">ES6笔记（三）</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/02/13/ES6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" title= "ES6笔记（一）">
+                    <div class="prevTitle">ES6笔记（一）</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <div id="comment"></div>
+    <script>
+    new Valine({
+        el: '#comment' ,
+        notify:false, 
+        verify:false, 
+        appId: "5a6GwXcbsb2EBWlIMCPPi8lf-gzGzoHsz",
+        appKey: "mfx2NaWgQ4QHpXsk2BT17uBy",
+        placeholder: "Let`s comment !",
+        path:window.location.pathname, 
+        avatar:'mm' 
+    });
+    </script>
+
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:617109354@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/CZQ-kyon" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/wechat.jpg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span> <span class="iconfont-archer power">&#xe635;</span><span id="theme-info">author <a href="https://github.com/CZQ-kyon" target="_blank">CZQ-kyon</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#六、数组"><span class="toc-text">六、数组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、JSON数组格式转换-Array-from（xxx）"><span class="toc-text">1、JSON数组格式转换 Array.from（xxx）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、Array-of（）"><span class="toc-text">2、Array.of（）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、find（）"><span class="toc-text">3、find（）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、fill（）"><span class="toc-text">4、fill（）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、数组的遍历-for-…-of-循环"><span class="toc-text">5、数组的遍历 for … of 循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6、entries（）实例方法"><span class="toc-text">6、entries（）实例方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#七、箭头函数和扩展"><span class="toc-text">七、箭头函数和扩展</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、默认值"><span class="toc-text">1、默认值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、主动抛出错误"><span class="toc-text">2、主动抛出错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、严谨模式"><span class="toc-text">3、严谨模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、获得需要传递的参数个数"><span class="toc-text">4、获得需要传递的参数个数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、箭头函数"><span class="toc-text">5、箭头函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6、对象的函数解构"><span class="toc-text">6、对象的函数解构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7、数组的函数解构"><span class="toc-text">7、数组的函数解构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8、in-的用法"><span class="toc-text">8、in 的用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9、数组的遍历方法"><span class="toc-text">9、数组的遍历方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#9-1-、forEach"><span class="toc-text">9.1 、forEach</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-2-、filter"><span class="toc-text">9.2 、filter</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-3-、some"><span class="toc-text">9.3 、some</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-4-、map"><span class="toc-text">9.4 、map</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10、join（）方法"><span class="toc-text">10、join（）方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11、toString（）方法"><span class="toc-text">11、toString（）方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#八、ES6-中的对象"><span class="toc-text">八、ES6 中的对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、ES6-允许把声明的变量直接赋值给对象"><span class="toc-text">1、ES6 允许把声明的变量直接赋值给对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、对象Key值构建"><span class="toc-text">2、对象Key值构建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、自定义对象方法"><span class="toc-text">3、自定义对象方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、Object-is-对象比较"><span class="toc-text">4、Object.is 对象比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、Object-assign（）合并对象"><span class="toc-text">5、Object.assign（）合并对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#九、Symbol-在对象中的作用"><span class="toc-text">九、Symbol 在对象中的作用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、声明Symbol"><span class="toc-text">1、声明Symbol</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、Symbol在对象中的引用"><span class="toc-text">2、Symbol在对象中的引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、Symbol对象元素的保护作用"><span class="toc-text">3、Symbol对象元素的保护作用</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 16
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/13</span><a class="archive-post-title" href= "/2020/02/13/ES6%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/" >ES6笔记（四）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/13</span><a class="archive-post-title" href= "/2020/02/13/ES6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/" >ES6笔记（三）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/13</span><a class="archive-post-title" href= "/2020/02/13/ES6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" >ES6笔记（二）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/13</span><a class="archive-post-title" href= "/2020/02/13/ES6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" >ES6笔记（一）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/13</span><a class="archive-post-title" href= "/2020/02/13/%E6%9D%82%E8%B0%88/" >杂谈</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/28</span><a class="archive-post-title" href= "/2020/01/28/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/" >富文本编辑工具Tinymce入门使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/23</span><a class="archive-post-title" href= "/2020/01/23/Vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/" >Vue学习笔记（四）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/22</span><a class="archive-post-title" href= "/2020/01/22/Vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/" >Vue学习笔记（三）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/19</span><a class="archive-post-title" href= "/2020/01/19/Vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" >Vue学习笔记（二）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/16</span><a class="archive-post-title" href= "/2020/01/16/Vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" >Vue学习笔记（一）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2020/01/10/vue-cli%E4%BB%8B%E7%BB%8D/" >vue-cli介绍</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/nvm%E4%B8%8Enpm%E7%9A%84%E4%BB%8B%E7%BB%8D/" >nvm与npm的介绍</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/07</span><a class="archive-post-title" href= "/2020/01/07/%E3%81%AA%E3%81%84%E3%81%93%E3%81%A8%E3%81%AF%E3%81%AA%E3%81%84-%E3%81%AA%E3%81%84%E3%81%A7%E3%81%AF%E3%81%84%E3%82%89%E3%82%8C%E3%81%AA%E3%81%84/" >...ないことはない/...ないではいられない</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/06</span><a class="archive-post-title" href= "/2020/01/06/Nginx%E7%9A%84%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BD%BF%E7%94%A8/" >Nginx的简单配置和使用</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/29</span><a class="archive-post-title" href= "/2019/12/29/%E3%81%AE%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%84%E3%81%8B-%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%84%E3%81%8B%E7%9A%84%E5%8C%BA%E5%88%AB/" >のではないか  /  ではないか的区别</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/27</span><a class="archive-post-title" href= "/2019/12/27/VScode%E4%B8%AD%E4%BD%BF%E7%94%A8Github%E7%AE%A1%E7%90%86%E9%A1%B9%E7%9B%AE/" >VScode中使用Github管理项目</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="ES6"><span class="iconfont-archer">&#xe606;</span>ES6</span>
+    
+        <span class="sidebar-tag-name" data-tags="整理归档"><span class="iconfont-archer">&#xe606;</span>整理归档</span>
+    
+        <span class="sidebar-tag-name" data-tags="Vue"><span class="iconfont-archer">&#xe606;</span>Vue</span>
+    
+        <span class="sidebar-tag-name" data-tags="日本語"><span class="iconfont-archer">&#xe606;</span>日本語</span>
+    
+        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
+    
+        <span class="sidebar-tag-name" data-tags="web"><span class="iconfont-archer">&#xe606;</span>web</span>
+    
+        <span class="sidebar-tag-name" data-tags="Github"><span class="iconfont-archer">&#xe606;</span>Github</span>
+    
+        <span class="sidebar-tag-name" data-tags="Node.js"><span class="iconfont-archer">&#xe606;</span>Node.js</span>
+    
+        <span class="sidebar-tag-name" data-tags="nvm"><span class="iconfont-archer">&#xe606;</span>nvm</span>
+    
+        <span class="sidebar-tag-name" data-tags="npm"><span class="iconfont-archer">&#xe606;</span>npm</span>
+    
+        <span class="sidebar-tag-name" data-tags="扯"><span class="iconfont-archer">&#xe606;</span>扯</span>
+    
+        <span class="sidebar-tag-name" data-tags="nginx"><span class="iconfont-archer">&#xe606;</span>nginx</span>
+    
+        <span class="sidebar-tag-name" data-tags="Tinymce"><span class="iconfont-archer">&#xe606;</span>Tinymce</span>
+    
+        <span class="sidebar-tag-name" data-tags="Vue-cli"><span class="iconfont-archer">&#xe606;</span>Vue-cli</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="Study"><span class="iconfont-archer">&#xe60a;</span>Study</span>
+    
+        <span class="sidebar-category-name" data-categories="Life"><span class="iconfont-archer">&#xe60a;</span>Life</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "John Doe"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+

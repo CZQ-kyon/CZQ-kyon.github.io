@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="John Doe">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="John Doe">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>ES6笔记（一） · CZQ-kyon&#39;s Blog</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >CZQ-kyon&#39;s Blog.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">ES6笔记（一）</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>CZQ-kyon's Blog.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            ES6笔记（一）
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ES6">ES6</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "整理归档">整理归档</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">1.2k</span>Reading time: <span class="post-count reading-time">5 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/02/13</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>该笔记中的代码片段都可以在浏览器中的控制台中运行 F12 ，直接看到执行结果，可以自己尝试。</p>
+<p>本篇包括：</p>
+<ul>
+<li>一、var 、 let 、 const</li>
+<li>二、解构赋值</li>
+<li>三、扩展运算符和 rest 运算符</li>
+<li>四、字符串模板</li>
+<li>五、数字操作</li>
+</ul>
+<hr>
+<br>
+
+<h2 id="一、var-、-let-、-const"><a href="#一、var-、-let-、-const" class="headerlink" title="一、var 、 let 、 const"></a>一、var 、 let 、 const</h2><h3 id="1、使用-var"><a href="#1、使用-var" class="headerlink" title="1、使用 var"></a>1、使用 var</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doSomething</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Finally '</span> + i);</span><br><span class="line">&#125;</span><br><span class="line">doSomething();</span><br></pre></td></tr></table></figure>
+
+<p>打印结果：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="string">Finally</span> <span class="number">5</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="2、使用-let"><a href="#2、使用-let" class="headerlink" title="2、使用 let"></a>2、使用 let</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doSomething</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Finally '</span> + i);</span><br><span class="line">&#125;</span><br><span class="line">doSomething();</span><br></pre></td></tr></table></figure>
+
+<p>打印结果：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="string">/Users/dkvirus/Documents/study/study-typescript/ex1/var.js:5</span></span><br><span class="line"><span class="string">console.log('Finally</span> <span class="string">' + i)</span></span><br><span class="line"><span class="string">                         ^</span></span><br><span class="line"><span class="string">ReferenceError: i is not defined</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p><font color="orange">结论：</font></p>
+<ul>
+<li><p>let 和 const 定义变量的作用域都是 离变量最近的那个块内；  </p>
+</li>
+<li><p>var 定义变量的作用域是离变量最近的那个方法 内。上面，用 var 定义的 i 变量的作用域为离 i 最近的方法内，即 i 的作用域在 doSomething 内，所以在 for 语句外也能打印出 i 的值。</p>
+</li>
+</ul>
+<p>var会数据污染</p>
+<br>
+
+<h2 id="二、解构赋值"><a href="#二、解构赋值" class="headerlink" title="二、解构赋值"></a>二、解构赋值</h2><h3 id="1、数组"><a href="#1、数组" class="headerlink" title="1、数组"></a>1、数组</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span>  [a,b,c]=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br></pre></td></tr></table></figure>
+
+<p>可以简单的理解为等号左边和等号右边的形式要统一，如果不统一解构将失败。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [a,[b,c],d]=[<span class="number">1</span>,[<span class="number">2</span>,<span class="number">3</span>],<span class="number">4</span>];</span><br><span class="line"><span class="string">``</span><span class="string">`  </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;br&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">**解构的默认值：**</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>javascript</span><br><span class="line"><span class="keyword">let</span> [foo = <span class="literal">true</span>] =[];</span><br><span class="line"><span class="built_in">console</span>.log(foo); <span class="comment">//控制台打印出true</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p><strong>undefined 和 null 的区别：</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [a,b=<span class="string">"czq"</span>]=[<span class="string">'kyon'</span>,<span class="literal">undefined</span>];</span><br><span class="line"><span class="built_in">console</span>.log(a+b); <span class="comment">//控制台显示“czqkyon”</span></span><br></pre></td></tr></table></figure>
+
+<p>undefined 相当于什么都没有，b是默认值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [a,b=<span class="string">"czq"</span>]=[<span class="string">'kyon'</span>,<span class="literal">null</span>];</span><br><span class="line"><span class="built_in">console</span>.log(a+b); <span class="comment">//控制台显示“kyonnull”</span></span><br></pre></td></tr></table></figure>
+
+<p>null相当于有值，但值为null。</p>
+<br>
+
+<h3 id="2、对象"><a href="#2、对象" class="headerlink" title="2、对象"></a>2、对象</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> &#123;foo,bar&#125; = &#123;<span class="attr">foo</span>:<span class="string">'czq'</span>,<span class="attr">bar</span>:<span class="string">'kyon'</span>&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(foo+bar); <span class="comment">//控制台打印出了“czqkyon”</span></span><br></pre></td></tr></table></figure>
+
+<p><font color="orange">注意：</font><br>对象的解构与数组有一个重要的不同。数组的元素是按次序排列的，变量的取值由它的位置决定；而对象的属性没有次序，变量必须与属性同名，才能取到正确的值。</p>
+<br>
+
+<p><strong>圆括号的使用</strong></p>
+<p>在解构之前就定义了变量，这时候再解构，就会报错</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> foo;</span><br><span class="line">&#123;foo&#125; =&#123;<span class="attr">foo</span>:<span class="string">'CZQ'</span>&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(foo);</span><br></pre></td></tr></table></figure>
+<p>编译报错</p>
+<p>解决报错：在解构的语句外边加一个圆括号就可以了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> foo;</span><br><span class="line">(&#123;foo&#125; =&#123;<span class="attr">foo</span>:<span class="string">'CZQ'</span>&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(foo); <span class="comment">//控制台输出CZQ</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="三、扩展运算符和-rest-运算符"><a href="#三、扩展运算符和-rest-运算符" class="headerlink" title="三、扩展运算符和 rest 运算符 * "></a>三、扩展运算符和 rest 运算符 <font color="red">* </font></h2><p>扩展运算符和rest运算符，都是…（三个点）。<br>可以解决参数和对象数组未知情况下的编程</p>
+<h3 id="1、对象扩展运算符（…）"><a href="#1、对象扩展运算符（…）" class="headerlink" title="1、对象扩展运算符（…）"></a>1、对象扩展运算符（…）</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">czq</span>(<span class="params">...arg</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(arg[<span class="number">0</span>]);</span><br><span class="line">    <span class="built_in">console</span>.log(arg[<span class="number">1</span>]);</span><br><span class="line">    <span class="built_in">console</span>.log(arg[<span class="number">2</span>]);</span><br><span class="line">    <span class="built_in">console</span>.log(arg[<span class="number">3</span>]);</span><br><span class="line">&#125;</span><br><span class="line">czq(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+
+<p>控制台输出：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="string">undefined</span></span><br></pre></td></tr></table></figure>
+
+<p><font color="orange">说明可以传入多个值，并且就算方法中引用多了也不会报错。</font></p>
+<br>
+
+<p><strong>用处例子：</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr1=[<span class="string">'www'</span>,<span class="string">'czqkyon'</span>,<span class="string">'top'</span>];</span><br><span class="line"><span class="keyword">let</span> arr2=arr1;</span><br><span class="line"><span class="built_in">console</span>.log(arr2); <span class="comment">//["www", "czqkyon", "top"]</span></span><br><span class="line">arr2.push(<span class="string">'hello'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(arr1); <span class="comment">//["www", "czqkyon", "top", "hello"]</span></span><br></pre></td></tr></table></figure>
+
+<p>改变 arr2 的值，arr1 的值也改变了，因为我们这是对内存堆栈的引用，不是真正的赋值</p>
+<p><font color="orange">【为了解决这个问题，可以利用对象扩展运算符解决】</font></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr1=[<span class="string">'www'</span>,<span class="string">'czqkyon'</span>,<span class="string">'top'</span>];</span><br><span class="line"><span class="comment">//let arr2=arr1;</span></span><br><span class="line"><span class="keyword">let</span> arr2=[...arr1];</span><br><span class="line"><span class="built_in">console</span>.log(arr2); <span class="comment">//["www", "czqkyon", "top"]</span></span><br><span class="line">arr2.push(<span class="string">'hello'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(arr2); <span class="comment">//["www", "czqkyon", "top", "hello"]</span></span><br><span class="line"><span class="built_in">console</span>.log(arr1); <span class="comment">//["www", "czqkyon", "top"]</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="2、rest运算符（…）"><a href="#2、rest运算符（…）" class="headerlink" title="2、rest运算符（…）"></a>2、rest运算符（…）</h3><p>有表示剩余的意思，当我们能知道前面的参数时，剩下的参数可以用 rest 来表示，和扩展运算符一样，也用…（三个点表示），很多时候不用特意去区分。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">czq</span>(<span class="params">first,...arg</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(arg.length);</span><br><span class="line">&#125;</span><br><span class="line">czq(zero,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>);</span><br></pre></td></tr></table></figure>
+
+<p>循环输出 rest 运算符:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">czq</span>(<span class="params">first,...arg</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> val <span class="keyword">of</span> arg)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(val);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">czq(<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>);</span><br></pre></td></tr></table></figure>
+
+<p><font color="orange">for  of </font>的循环可以避免我们开拓内存空间，增加代码运行效率，不用 <code>for(let i = 0;i &lt; arg.length; i++)</code></p>
+<hr>
+<p><strong><font color="red">实际开发中的用处：</font></strong></p>
+<p>在 vuex 中，构造器里只能有一个 computed 属性，如果写多个，只有最后一个computed 属性可用，所以可以对 computed 属性进行一个改造。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">computed:&#123;</span><br><span class="line">    ...mapState([<span class="string">'count'</span>]),</span><br><span class="line">    count()&#123;</span><br><span class="line">        <span class="keyword">this</span>.$store.getters.count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<br>
+
+<h2 id="四、字符串模板"><a href="#四、字符串模板" class="headerlink" title="四、字符串模板"></a>四、字符串模板</h2><h3 id="1、对运算的支持"><a href="#1、对运算的支持" class="headerlink" title="1、对运算的支持"></a>1、对运算的支持</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a=<span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> b=<span class="number">2</span>;</span><br><span class="line"><span class="keyword">let</span> result=<span class="string">`<span class="subst">$&#123;a+b&#125;</span>`</span>;</span><br><span class="line"><span class="built_in">document</span>.write(result);<span class="comment">//3</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2、字符串查找"><a href="#2、字符串查找" class="headerlink" title="2、字符串查找"></a>2、字符串查找</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> czq = <span class="string">'yamada'</span>;</span><br><span class="line"><span class="keyword">let</span> blog = <span class="string">'Hello yamada'</span>;</span><br><span class="line"><span class="built_in">document</span>.write(blog.includes(czq));<span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3、判断开头是否存在"><a href="#3、判断开头是否存在" class="headerlink" title="3、判断开头是否存在"></a>3、判断开头是否存在</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blog.startsWith(czq); <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4、判断结尾是否存在"><a href="#4、判断结尾是否存在" class="headerlink" title="4、判断结尾是否存在"></a>4、判断结尾是否存在</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blog.endsWith(czq); <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+
+<p><font color="orange">includes、startsWith、endsWith ：三者都直接返回 true / false，不返回索引值</font></p>
+<h3 id="5、复制字符串"><a href="#5、复制字符串" class="headerlink" title="5、复制字符串"></a>5、复制字符串</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.write(<span class="string">'love '</span>.repeat(<span class="number">3</span>));</span><br></pre></td></tr></table></figure>
+
+<p>会连续输出3个 love</p>
+<br>
+
+<h2 id="五、数字操作"><a href="#五、数字操作" class="headerlink" title="五、数字操作"></a>五、数字操作</h2><p>整数的操作是有一个取值范围的，它的取值范围就是2的53次方:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="built_in">Math</span>.pow(<span class="number">2</span>,<span class="number">53</span>)<span class="number">-1</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">//9007199254740991</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>判断某个数是否超出：</strong></p>
+<p>最大安全整数MAX_SAFE_INTEGER</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">consolec .log(<span class="built_in">Number</span>.MAX_SAFE_INTEGER);</span><br></pre></td></tr></table></figure>
+
+<p>最小安全整数MIN_SAFE_INTEGER</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>.MIN_SAFE_INTEGER);</span><br></pre></td></tr></table></figure>
+
+<p>安全整数判断 isSafeInteger() ：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a= <span class="built_in">Math</span>.pow(<span class="number">2</span>,<span class="number">53</span>)<span class="number">-1</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>.isSafeInteger(a));<span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+    </article>
+    <!-- license  -->
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2020/02/13/ES6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" title= "ES6笔记（二）">
+                    <div class="nextTitle">ES6笔记（二）</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/02/13/%E6%9D%82%E8%B0%88/" title= "杂谈">
+                    <div class="prevTitle">杂谈</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <div id="comment"></div>
+    <script>
+    new Valine({
+        el: '#comment' ,
+        notify:false, 
+        verify:false, 
+        appId: "5a6GwXcbsb2EBWlIMCPPi8lf-gzGzoHsz",
+        appKey: "mfx2NaWgQ4QHpXsk2BT17uBy",
+        placeholder: "Let`s comment !",
+        path:window.location.pathname, 
+        avatar:'mm' 
+    });
+    </script>
+
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:617109354@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/CZQ-kyon" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/wechat.jpg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span> <span class="iconfont-archer power">&#xe635;</span><span id="theme-info">author <a href="https://github.com/CZQ-kyon" target="_blank">CZQ-kyon</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、var-、-let-、-const"><span class="toc-text">一、var 、 let 、 const</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、使用-var"><span class="toc-text">1、使用 var</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、使用-let"><span class="toc-text">2、使用 let</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、解构赋值"><span class="toc-text">二、解构赋值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、数组"><span class="toc-text">1、数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、对象"><span class="toc-text">2、对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、扩展运算符和-rest-运算符"><span class="toc-text">三、扩展运算符和 rest 运算符 * </span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、对象扩展运算符（…）"><span class="toc-text">1、对象扩展运算符（…）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、rest运算符（…）"><span class="toc-text">2、rest运算符（…）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、字符串模板"><span class="toc-text">四、字符串模板</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、对运算的支持"><span class="toc-text">1、对运算的支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、字符串查找"><span class="toc-text">2、字符串查找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、判断开头是否存在"><span class="toc-text">3、判断开头是否存在</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、判断结尾是否存在"><span class="toc-text">4、判断结尾是否存在</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、复制字符串"><span class="toc-text">5、复制字符串</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、数字操作"><span class="toc-text">五、数字操作</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 16
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/13</span><a class="archive-post-title" href= "/2020/02/13/ES6%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/" >ES6笔记（四）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/13</span><a class="archive-post-title" href= "/2020/02/13/ES6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/" >ES6笔记（三）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/13</span><a class="archive-post-title" href= "/2020/02/13/ES6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" >ES6笔记（二）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/13</span><a class="archive-post-title" href= "/2020/02/13/ES6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" >ES6笔记（一）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/13</span><a class="archive-post-title" href= "/2020/02/13/%E6%9D%82%E8%B0%88/" >杂谈</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/28</span><a class="archive-post-title" href= "/2020/01/28/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/" >富文本编辑工具Tinymce入门使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/23</span><a class="archive-post-title" href= "/2020/01/23/Vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/" >Vue学习笔记（四）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/22</span><a class="archive-post-title" href= "/2020/01/22/Vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/" >Vue学习笔记（三）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/19</span><a class="archive-post-title" href= "/2020/01/19/Vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" >Vue学习笔记（二）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/16</span><a class="archive-post-title" href= "/2020/01/16/Vue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" >Vue学习笔记（一）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2020/01/10/vue-cli%E4%BB%8B%E7%BB%8D/" >vue-cli介绍</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/nvm%E4%B8%8Enpm%E7%9A%84%E4%BB%8B%E7%BB%8D/" >nvm与npm的介绍</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/07</span><a class="archive-post-title" href= "/2020/01/07/%E3%81%AA%E3%81%84%E3%81%93%E3%81%A8%E3%81%AF%E3%81%AA%E3%81%84-%E3%81%AA%E3%81%84%E3%81%A7%E3%81%AF%E3%81%84%E3%82%89%E3%82%8C%E3%81%AA%E3%81%84/" >...ないことはない/...ないではいられない</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/06</span><a class="archive-post-title" href= "/2020/01/06/Nginx%E7%9A%84%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BD%BF%E7%94%A8/" >Nginx的简单配置和使用</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/29</span><a class="archive-post-title" href= "/2019/12/29/%E3%81%AE%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%84%E3%81%8B-%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%84%E3%81%8B%E7%9A%84%E5%8C%BA%E5%88%AB/" >のではないか  /  ではないか的区别</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/27</span><a class="archive-post-title" href= "/2019/12/27/VScode%E4%B8%AD%E4%BD%BF%E7%94%A8Github%E7%AE%A1%E7%90%86%E9%A1%B9%E7%9B%AE/" >VScode中使用Github管理项目</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="ES6"><span class="iconfont-archer">&#xe606;</span>ES6</span>
+    
+        <span class="sidebar-tag-name" data-tags="整理归档"><span class="iconfont-archer">&#xe606;</span>整理归档</span>
+    
+        <span class="sidebar-tag-name" data-tags="Vue"><span class="iconfont-archer">&#xe606;</span>Vue</span>
+    
+        <span class="sidebar-tag-name" data-tags="日本語"><span class="iconfont-archer">&#xe606;</span>日本語</span>
+    
+        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
+    
+        <span class="sidebar-tag-name" data-tags="web"><span class="iconfont-archer">&#xe606;</span>web</span>
+    
+        <span class="sidebar-tag-name" data-tags="Github"><span class="iconfont-archer">&#xe606;</span>Github</span>
+    
+        <span class="sidebar-tag-name" data-tags="Node.js"><span class="iconfont-archer">&#xe606;</span>Node.js</span>
+    
+        <span class="sidebar-tag-name" data-tags="nvm"><span class="iconfont-archer">&#xe606;</span>nvm</span>
+    
+        <span class="sidebar-tag-name" data-tags="npm"><span class="iconfont-archer">&#xe606;</span>npm</span>
+    
+        <span class="sidebar-tag-name" data-tags="扯"><span class="iconfont-archer">&#xe606;</span>扯</span>
+    
+        <span class="sidebar-tag-name" data-tags="nginx"><span class="iconfont-archer">&#xe606;</span>nginx</span>
+    
+        <span class="sidebar-tag-name" data-tags="Tinymce"><span class="iconfont-archer">&#xe606;</span>Tinymce</span>
+    
+        <span class="sidebar-tag-name" data-tags="Vue-cli"><span class="iconfont-archer">&#xe606;</span>Vue-cli</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="Study"><span class="iconfont-archer">&#xe60a;</span>Study</span>
+    
+        <span class="sidebar-category-name" data-categories="Life"><span class="iconfont-archer">&#xe60a;</span>Life</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "John Doe"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+
