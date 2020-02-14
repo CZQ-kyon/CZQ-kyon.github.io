@@ -22,7 +22,7 @@
     <meta name="description" content="">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>CZQ-kyon&#39;s Blog</title>
+    <title>文法例句 · CZQ-kyon&#39;s Blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -76,6 +76,8 @@
 
     <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -200,14 +202,23 @@
 <meta name="generator" content="Hexo 4.2.0"></head>
 
     
-        <body class="home-body">
+        <body class="post-body">
     
     
-<header class="header index-header">
+<header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >CZQ-kyon&#39;s Blog.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">文法例句</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>CZQ-kyon's Blog.</a>
 </header>
@@ -226,17 +237,17 @@ height:50vh;
     <!-- 主页  -->
     
     
-    <!-- 文章页  -->
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            CZQ-kyon's Blog.
-            <!-- 文章页  -->
+            文法例句
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
@@ -244,12 +255,49 @@ height:50vh;
             <!-- 主页副标题  -->
             
             
-                it's better to burn out than to fade away
-            
-            <!-- 文章页  -->
+            <!-- 404 -->
             
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "日本語">日本語</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">408</span>Reading time: <span class="post-count reading-time">1 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/02/07</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -350,258 +398,108 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/02/13/ES6%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/" >
-            
-                <span>ES6笔记（四）</span>
-        </a>
-        <div class="abstract-content">
-            对以前学过的ES6笔记的整理 part:4
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/13</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ES6">ES6</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "整理归档">整理归档</a>
-    
-</div>
-            
-        </div>
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="1、どうも…らしい-そうだ-ようだ"><a href="#1、どうも…らしい-そうだ-ようだ" class="headerlink" title="1、どうも…らしい/そうだ/ようだ"></a>1、どうも…らしい/そうだ/ようだ</h2><p><strong>总觉得好像…似的</strong></p>
+<ul>
+<li><p>最近、どうも太ったらしい、ジーパンのウエストが苦しくなってきた。<br>（最近好像变胖了，牛仔裤的裤腰越来越紧。）</p>
+</li>
+<li><p>この雲（くも）行（ゆ）きでは、どうも夕立が来そうだ。<br>（看这个云的走势，好像要下雷阵雨了。）</p>
+</li>
+<li><p>あの人の行動を見ていると、Ｂ型は気分屋（きぶんや）だというのは、どうも当たっているようだ。<br>（从那个人的行动来看，所谓B型是性情不定，好像还真的挺准的。）</p>
+</li>
+<li><p>10万円で買った壺が、ほかの店では五万円で売られていた。どうも騙されたようだ。<br>（10万日元买的壶，在其他店里只卖5万日元，总有一种被骗的感觉。）</p>
+</li>
+<li><p>「こんな時間であるはずがない、どうも変だ」と思ったら、時計が遅れていた。<br>（“不可能是这个时间，有点奇怪”，结果时钟慢了。）</p>
+</li>
+</ul>
+<br>
+
+<hr>
+<br>
+
+<h2 id="2、ことになった"><a href="#2、ことになった" class="headerlink" title="2、ことになった"></a>2、ことになった</h2><p><strong>表示事物之间的发展趋势、结果、客观的决定。</strong></p>
+<ul>
+<li><p>今回のツアーは人数不足のため、中止ということになった。<br>（这次的行程由于人数不足而取消。）</p>
+</li>
+<li><p>我社は移転することになった。<br>（本公司即将搬迁。）</p>
+</li>
+<li><p>夏休みで人出が多いので、営業時間を延長することになった。<br>（由于暑假出行人数众多，决定延长营业时间。）</p>
+</li>
+<li><p>今年は創立記念日の祝賀会（しゅくがかい）を行わないことになった。<br>（今年的成立纪念日将不举行庆祝会。）</p>
+</li>
+<li><p>諸般の事情により、会社を辞めることになった。<br>（因为众多事由，决定辞去工作。）</p>
+</li>
+</ul>
+<br>
+
+<hr>
+<br>
+
+<h2 id="3、…でもあり…でもある"><a href="#3、…でもあり…でもある" class="headerlink" title="3、…でもあり…でもある"></a>3、…でもあり…でもある</h2><p><strong>既是…，同时也是…（表示两者同时存在）</strong></p>
+<ul>
+<li><p>うちの父は営業者でもあり、営業マンでもあり、会計係でもある。<br>（家父既是经营者，同时也是业务员，会计。）</p>
+</li>
+<li><p>日本語の文法が複雑なのはなところでもあり、面白いところでもある。<br>（日语的语法复杂，既有麻烦的地方，也有有趣的地方。）</p>
+</li>
+<li><p>娘が結婚するということは親として嬉しくもあり、さびしくもある。<br>（女儿结婚，让父母既高兴又感到寂寞。）</p>
+</li>
+</ul>
+
     </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/02/13/ES6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/" >
-            
-                <span>ES6笔记（三）</span>
-        </a>
-        <div class="abstract-content">
-            对以前学过的ES6笔记的整理 part:3
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/13</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ES6">ES6</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "整理归档">整理归档</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/02/13/ES6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" >
-            
-                <span>ES6笔记（二）</span>
-        </a>
-        <div class="abstract-content">
-            对以前学过的ES6笔记的整理 part:2
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/13</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ES6">ES6</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "整理归档">整理归档</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/02/13/ES6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" >
-            
-                <span>ES6笔记（一）</span>
-        </a>
-        <div class="abstract-content">
-            对以前学过的ES6笔记的整理 part:1
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/13</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ES6">ES6</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "整理归档">整理归档</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/02/13/%E6%9D%82%E8%B0%88/" >
-            
-                <span>杂谈</span>
-        </a>
-        <div class="abstract-content">
-            春天和消毒都想让它消失
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/13</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "扯">扯</a>
-    
-</div>
-            
-        </div>
-    </article>
+    <!-- license  -->
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2020/02/13/%E6%9D%82%E8%B0%88/" title= "杂谈">
+                    <div class="nextTitle">杂谈</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/01/28/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7Tinymce%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/" title= "富文本编辑工具Tinymce入门使用">
+                    <div class="prevTitle">富文本编辑工具Tinymce入门使用</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-    <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">NEXT &gt;</a>
-    </nav>
     
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <div id="comment"></div>
+    <script>
+    new Valine({
+        el: '#comment' ,
+        notify:false, 
+        verify:false, 
+        appId: "5a6GwXcbsb2EBWlIMCPPi8lf-gzGzoHsz",
+        appKey: "mfx2NaWgQ4QHpXsk2BT17uBy",
+        placeholder: "Let`s comment !",
+        path:window.location.pathname, 
+        avatar:'mm' 
+    });
+    </script>
+
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
-            
-            <div class="profile">
-    <img class="profile-avatar" alt="avatar" src= /avatar/CZQ_kyon.png >
-    <div class="profile-name">CZQ-kyon</div>
-    
-    <div class="profile-signature">
-        宅居动物
-    </div>
-    
-    
-    <div class="profile-social">
-        
-    
-        
-            
-                <a href="mailto:617109354@qq.com" class="iconfont-archer email" title=email ></a>
-            
-        
-    
-        
-            
-                <a href="//github.com/CZQ-kyon" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-            
-                <span class="iconfont-archer wechat" title=wechat>
-                  
-                  <img class="profile-qr" src="/assets/wechat.jpg" />
-                </span>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-    </div>
-    
-    
-        <div class="friends">
-            <div>Communicate</div>
-            
-                
-                    <span>
-                        <a href= //message.czqkyon.top target="_black">Leave A Message</a>
-                    </span>
-                
-            
-        </div>
-    
-    
-        <div class="about-me">
-            <a href = "/about" >ABOUT ME</a>
-        </div>
-    
-</div>
             
         </div>
         <footer class="footer footer-unloaded">
@@ -684,6 +582,24 @@ height:50vh;
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、どうも…らしい-そうだ-ようだ"><span class="toc-text">1、どうも…らしい&#x2F;そうだ&#x2F;ようだ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、ことになった"><span class="toc-text">2、ことになった</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、…でもあり…でもある"><span class="toc-text">3、…でもあり…でもある</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1096,6 +1012,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
